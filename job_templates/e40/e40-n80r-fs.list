@@ -1,0 +1,22 @@
+mars <<eor
+list,
+ class=e4,
+ expver=1,
+ stream=da,
+ launch="",
+ use=n,
+ costonly=n,
+ accuracy=normal,
+ type=fc,
+ format=packed,
+ levtype=sfc,
+ level=off,
+ area=global,
+ repres=gg,
+ grid=av,
+ param=142,
+ time=00/06/12/18,
+ step=all,
+ date=20000101.
+end
+eor

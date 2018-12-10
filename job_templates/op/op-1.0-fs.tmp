@@ -1,0 +1,23 @@
+mars << eor
+retrieve,
+ class=od,
+ expver=1,
+ stream=da,
+ launch="",
+ use=n,
+ costonly=n,
+ accuracy=normal,
+ type=fc,
+ format=packed,
+ levtype=sfc,
+ level=off,
+ area=60/-20/60/-20,
+ repres=gg,
+ grid=1./1.,
+ param=142/143/146/147/165/166/176/177/180/181/182,
+ time=0/6/12/18,
+ step=24,
+ date=PUT_DATE_HERE,
+ target="$WORK/gpfs.[DATE].[TIME].grib"
+end
+eor

@@ -1,0 +1,21 @@
+mars << eor
+retrieve,
+ class=od,
+ expver=1,
+ stream=da,
+ launch="",
+ use=n,
+ costonly=n,
+ accuracy=normal,
+ type=fc,
+ format=packed,
+ levtype=sfc,
+ level=off,
+ repres=gg,
+ grid=80,
+ param=142/143/146/147/164/176/177/178/179/180/181/195/196,
+ time=12,
+ step=24,
+ date=PUT_DATE_HERE,
+ target="$WORK/gpsfo[DATE][TIME]".
+eor

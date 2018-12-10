@@ -1,0 +1,23 @@
+mars <<eor
+retrieve,
+ class=e4,
+ expver=1,
+ stream=da,
+ launch="",
+ use=n,
+ costonly=n,
+ accuracy=normal,
+ type=fc,
+ format=packed,
+ levtype=sfc,
+ level=off,
+ area=global,
+ repres=gg,
+ grid=av,
+ param=142/143/144/145/146/147/169/175/176/177/178/179/180/181/182/195/196/197/201/202/205/229/230/231/232/239/240/243/244/245/159/189/49/50/208/209/210/211/44/45,
+ time=00,
+ step=24,
+ date=PUT_DATE_HERE,
+ target="$WORK/ggfs[DATE][TIME].[STEP].grb".
+end
+eor

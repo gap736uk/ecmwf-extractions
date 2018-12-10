@@ -1,0 +1,24 @@
+mars << eor
+retrieve,
+ class=od,
+ expver=1,
+ stream=da,
+ launch="",
+ use=n,
+ costonly=n,
+ accuracy=normal,
+ type=fc,
+ format=packed,
+ levtype=ml,
+ level=all,
+ area=n1/n2/n3/n4,
+ repres=gg,
+ grid=256,
+ gaussian=reduced,
+ param=130/138/152/155/203, #129/130/131/132/135/138/152/155/203,
+ time=00/12,
+ step=12/to/120/by/12,
+ date=PUT_DATE_HERE,
+ target="$WORK/[TYPE].[LEVTYPE].[DATE].[TIME].[STEP].[PARAM].grb".
+end
+eor

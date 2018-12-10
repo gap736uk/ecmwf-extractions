@@ -1,0 +1,34 @@
+mars <<eor
+retrieve,
+ class=e4,
+ expver=1,
+ stream=da,
+ launch="",
+ use=n,
+ costonly=n,
+ accuracy=normal,
+ type=an,
+ format=packed,
+ levtype=pt,
+ level=265/275/285/300/315/330/350/370/395/430/475/530/600/700/850,
+ area=global,
+ repres=gg,
+ grid=av,
+ param=60/133/203,
+ time=00/to/18/by/06,
+ date=PUT_DATE_HERE,
+ target="$WORK/ggat[DATE][TIME].grb".
+end
+eor
+
+
+
+
+
+
+
+
+
+
+
+

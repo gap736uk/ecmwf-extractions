@@ -1,0 +1,17 @@
+"""
+ftp_tmp.py
+==========
+
+Template file for FTP section of job
+
+"""
+
+ftp_commands=['ftp -n ftp-gw.ecmwf.int <<EOF',
+              'user badc\@tornado.badc.rl.ac.uk rain&h@il',
+              'cd DELIVERIES_DIR',
+              'cd TARGET_DIR',
+              'umask 037',
+              'bin',
+              'mput *',
+              'quit',
+              'EOF']

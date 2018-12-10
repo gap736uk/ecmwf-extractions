@@ -1,0 +1,23 @@
+mars << eor
+retrieve,
+ class=od,
+ expver=1,
+ stream=da,
+ launch="",
+ use=n,
+ costonly=n,
+ accuracy=normal,
+ type=an,
+ format=packed,
+ levtype=sfc,
+ level=off,
+ area=global,
+ repres=gg,
+ grid=0.5/0.5,
+ param=139/140/141/151/165/166/167/168/170/171/173/174/183/184/198/199/233/234/235/236/237,
+ time=00/to/18/by/06, 
+ step=0,
+ date=PUT_DATE_HERE, 
+ target="$WORK/lisf[DATE][TIME]"
+end
+eor

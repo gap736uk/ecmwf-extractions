@@ -1,0 +1,24 @@
+mars << eor
+retrieve,
+ class=od,
+ expver=1,
+ stream=da,
+ launch="",
+ use=n,
+ costonly=n,
+ accuracy=normal,
+ type=fc,
+ format=packed,
+ levtype=ml,
+ level=1/to/60,
+ area=global,
+ repres=gg,
+ grid=80,
+ gaussian=reduced,
+ param=246/247/248,
+ time=00,
+ step=24,
+ date=PUT_DATE_HERE,
+ target="$WORK/ggfm[DATE][TIME].[PARAM].grb".
+end
+eor

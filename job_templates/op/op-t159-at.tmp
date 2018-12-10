@@ -1,0 +1,22 @@
+mars <<eor
+retrieve,
+ class=od,
+ expver=1,
+ stream=da,
+ launch="",
+ use=n,
+ costonly=n,
+ accuracy=normal,
+ type=an,
+ format=packed,
+ levtype=pt,
+ level=265/275/285/300/315/330/350/370/395/430/475/530/600/700/850,
+ area=global,
+ repres=sh,
+ resol=159,
+ param=53/54/131/132/138/155,
+ time=00/to/18/by/06,
+ date=PUT_DATE_HERE,
+ target="$WORK/spat[DATE][TIME].[PARAM].grb".
+end
+eor

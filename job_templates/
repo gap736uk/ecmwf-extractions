@@ -1,0 +1,83 @@
+#!/usr/local/bin/python
+helpMessage="""
+
+run_job.py
+==========
+
+Python control script for creating and executing MARS jobs
+from BADC templates.
+
+Usage:
+======
+
+    run_job.py [options] job_name.tmp
+
+Where:
+======
+
+    [options] are yet to be defined...
+
+Example usage:
+==============
+
+    run_job.py -start 1999010318 -end 1999020300 op-2.5-as.tmp
+
+This will run the Operational 2.5 degree job for the period of
+18:00 on 3rd Jan 1999 until 00:00 on 3rd Feb 1999.
+
+"""
+
+#-------------------------------------
+# Import required standard modules
+#-------------------------------------
+
+import os
+import sys
+import string
+import re
+
+#-------------------------------------
+# Import commands from local modules
+#-------------------------------------
+
+from qsub_tmp import qsub_commands
+from ftp_tmp import ftp_commands
+from mkdir_tmp import mkdir_commands
+from rmdir_tmp import rmdir_commands
+
+
+#-------------------------------------
+# Define directory names
+#-------------------------------------
+
+basedir="/home/ms/gb/ukc"
+templatedir=os.path.join(basedir, "job_templates")
+jobdir=os.path.join(basedir, "temp_jobfiles")
+
+sys.path.append(templatedir)
+
+template='op-1.125-am.tmp'
+date="19990101"
+
+if template[-4:]!=".tmp":
+    print "Template file not recognised: %s" % template
+    sys.exit()
+else:
+    dataset=template[:-4] 
+
+job_script=[]
+
+def compileParts():
+    job_info=open(template, 'r').readlines()
+    for line in qsub_commands+['\n']+mkdir_commands+['\n']+job_info+['\n']+ftp_commands+['\n']+rmdir_commands:
+        
+
+def writeJobFile():
+    # Open output file to create job
+    pid=os.getpid()
+    jobfile=os.path.join(jobdir, dataset+"_"+pid+".job")
+    job=open(jobfile, 'w')
+
+
+if __name__=="__main__":
+    compileParts() 

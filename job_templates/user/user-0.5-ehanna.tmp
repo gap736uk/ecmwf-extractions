@@ -1,0 +1,23 @@
+mars << eor
+retrieve,
+ class=od,
+ expver=1,
+ stream=da,
+ launch="",
+ use=n,
+ costonly=n,
+ accuracy=normal,
+ type=an,
+ format=packed,
+ levtype=sfc,
+ level=off,
+ area=-50/0/-90/360,
+ repres=gg,
+ grid=0.5/0.5,
+ param=sf/lsp/lspf/2t/cp,
+ time=00/to/18/by/06, 
+ step=0,
+ date=PUT_DATE_HERE, 
+ target="$WORK/ecm-op_50s90s_[DATE][TIME]_[PARAM].grb"
+end
+eor

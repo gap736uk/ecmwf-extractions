@@ -1,0 +1,35 @@
+File-Naming Convention for BADC MARS job templates
+==================================================
+
+All MARS templates follow the convention:
+
+
+  DATASET-GRIDTYPE-LEVELTYPE[-OTHER]
+  
+Where:
+
+DATASET is the ECMWF dataset code:
+ op = Operational
+ e40 = ERA-40
+
+GRIDTYPE is the type of grid resolution:
+ 2.5 = 2.5 x 2.5 regular lat/long grid
+ 1.125 = 1.125 x 1.125 regular lat/long grid 
+ 1.0 = 1.0 x 1.0 regular lat/long grid
+ n80 = Full N80 Gaussian grid
+ n80r = Reduced N80 Gaussian grid
+ t106 = T106 Spectral Resolution
+ t159 = T159 Spectral Resolution 
+ 
+LEVELTYPE is the analysis/forecast specifier and level type:
+ The first character is 'a' for analysis or 'f' for forecast
+ The second character represents the level type:
+   m = model levels
+   p = pressure levels
+   s = surface/single levels
+   t = potential temperature levels
+   v = potential vorticity levels
+   
+[-OTHER] can be used for additional information such as monthly 
+mean specifications.
+ 

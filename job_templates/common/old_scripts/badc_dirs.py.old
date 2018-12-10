@@ -1,0 +1,20 @@
+"""
+badc_dirs.py
+============
+
+A dictionary of directories to insert into the FTP section
+of a job for particular datasets.
+
+"""
+
+target_dirs={"op-1.125":"/badc/ecmwf-op/.raw/op-1.125",
+             "op-2.5":"/badc/ecmwf-op/.raw/op-2.5",
+             "op-n80":"/badc/ecmwf-op/.raw/op-n80",
+             "op-n80r":"/badc/ecmwf-op/.raw/op-n80r",
+             "op-t159":"/badc/ecmwf-op/.raw/op-t159",
+	     "e40-n80r":"/badc/ecmwf-op/.raw/e40/6-hourly_grouped",
+	     "e40-t159":"/badc/ecmwf-op/.raw/e40/6-hourly_grouped"}
+
+delivery_dirs={"op":"/deliveries/ecmwf-op",
+               "e40":"/deliveries/ecmwf-e40",
+               "user":"/deliveries/ecmwf-op"}

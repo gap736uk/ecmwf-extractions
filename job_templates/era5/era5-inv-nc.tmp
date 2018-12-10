@@ -1,0 +1,14 @@
+mars << eor
+retrieve,
+ class=ea,
+ date=PUT_DATE_HERE,
+ expver=1,
+ levtype=surf,
+ param=26.128/228007/27.128/28.128/29.128/30.128/43.128/74.128/129.128/160.128/161.128/162.128/163.128/172.128,
+ stream=oper,
+ time=0,
+ type=an,
+ grid=0.25/0.25,
+ format=netcdf,
+ target="$WORK/ecmwf-era5_{stream}_{type}_{levtype}_[DATE][time].{shortName}.inv.grb".
+eor

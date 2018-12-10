@@ -1,0 +1,23 @@
+mars <<eor
+retrieve,
+ class=od,
+ expver=1,
+ stream=da,
+ launch="",
+ use=n,
+ costonly=n,
+ accuracy=normal,
+ type=an,
+ format=packed,
+ levtype=pv,
+ level=2000,
+ area=global,
+ repres=gg,
+ grid=80,
+ gaussian=reduced,
+ param=3/54/129/131/132/133/203,
+ time=00/to/18/by/06,
+ date=PUT_DATE_HERE,
+ target="$WORK/ggav[DATE][TIME].[PARAM].grb".
+end
+eor

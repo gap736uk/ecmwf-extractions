@@ -1,0 +1,23 @@
+mars << eor
+retrieve,
+ class=od,
+ expver=1,
+ stream=da,
+ launch="",
+ use=n,
+ costonly=n,
+ accuracy=normal,
+ type=fc,
+ format=packed,
+ levtype=sfc,
+ level=off,
+ area=global,
+ repres=gg,
+ grid=1.125/1.125,
+ param=142/143/144/145/146/147/169/175/176/177/178/179/180/181/182/195/196/197/201/202/205/243/244/245/159/189/49/50/208/209/210/211/44/45,
+ time=0/6/12/18,
+ step=24,
+ date=PUT_DATE_HERE,
+ target="$WORK/FS.[PARAM].[DATE].[TIME].[STEP].grib"
+end
+eor
