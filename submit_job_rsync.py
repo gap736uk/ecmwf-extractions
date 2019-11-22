@@ -65,7 +65,7 @@ sys.path.append(os.path.join(templatedir, 'common'))
 
 
 # Import commands from local modules
-from slr_tmp import sl_commands
+from slr_tmp import *
 from slmkdir_tmp import mkdir_commands
 from sltransfer_options_tmp import transfer_commands
 from slrmdir_tmp import rmdir_commands
@@ -98,7 +98,6 @@ class MarsJob:
     if dataset[-4:] != ".tmp":
         dataset += '.tmp'
 
-    #import pdb;pdb.set_trace()        
     self.template = os.path.join(templatedir, self.superset, dataset)
     self.job_script = []  
     
@@ -139,7 +138,19 @@ class MarsJob:
 
   def compileParts(self):
     job_info = open(self.template, 'r').readlines()
-    linelist = sl_commands+["\n"] + loop_commands+["\n"] + mkdir_commands + ["\n"] + job_info+["\n"]
+    
+    linelist = sl_commands
+    if self.qos == 'long':
+        linelist += sl_commands_long+["\n"]
+    elif self.qos == 'large':
+        linelist = sl_commands_large+["\n"]
+    elif self.qos == 'express':
+        linelist = sl_commands_express+["\n"]
+    else:
+        linelist = sl_commands+["\n"]
+    
+    linelist +=  loop_commands+["\n"] + mkdir_commands + ["\n"] + job_info+["\n"]
+    
     linelist = linelist + [i+"\n" for i in transfer_commands.split("\n")] + ["\n"] + rmdir_commands + ["\n"] + endloop_commands
 
     for line in linelist:
@@ -288,7 +299,9 @@ if __name__=="__main__":
         elif arg in ["-f","-filename", "-file", "-file_template"]:
                 keywords['file_template'] = args[args.index(arg)+1]
 
-
+    
+    if not keywords.has_key('qos'):
+        keywords['qos'] = 'express'
     if not keywords.has_key('start') and not keywords.has_key('ago'):
     
        #exitNicely("No start date or 'ago' argument provided.")

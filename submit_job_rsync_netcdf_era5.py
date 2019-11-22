@@ -92,14 +92,10 @@ class MarsJob:
     self.dataset = dataset
     self.dparts = string.split(dataset, "-")
     self.superset = self.dparts[0]
-    
-    #dataset = 'era5/era5_s.tmp'
-    #superset = era5
-    
+        
     if dataset[-4:] != ".tmp":
         dataset += '.tmp'
 
-           
     self.template = os.path.join(templatedir, self.superset, dataset)
     self.job_script = []  
     
@@ -112,8 +108,7 @@ class MarsJob:
       else:
           self.target_dir=target_dirs[self.dparts[0]+"-"+self.dparts[1]]
 
-    # Set keywords as instance attributes
-    
+    # Set keywords as instance attributes 
     for key in kw.keys():
         setattr(self, key, kw[key])
 
@@ -131,8 +126,6 @@ class MarsJob:
     # Run each method
     self.compileParts()
     print self.writeJobFile()
-
-
     self.submitJob()
 
 
@@ -144,6 +137,7 @@ class MarsJob:
   def compileParts(self):
     job_info = open(self.template, 'r').readlines()
     
+    
     linelist = sl_commands
     if self.qos == 'long':
         linelist += sl_commands_long+["\n"]
@@ -154,65 +148,22 @@ class MarsJob:
     elif self.qos == 'timecrit1':
         linelist += sl_commands_timecrit1 + ["\n"]
     
-    linelist +=  rsync_command + ["\n"] + loop_commands+["\n"] + mkdir_commands + ["\n"] + job_info+["\n"]
-    
-    linelist += [i+"\n" for i in convert_commands.split("\n")] + ["\n"] + endloop_commands
-    linelist += [i+"\n" for i in transfer_commands.split("\n")] + ["\n"] + rmdir_commands + ["\n"] + endloop_commands
 
+    linelist += strict_command + ["\n"] + mkdir_commands + ["\n"] + job_info+["\n"]
+
+    
     for line in linelist:
     
     
         if string.find(line, 'JOB_NAME_HERE') > -1:
             line = string.replace(line, 'JOB_NAME_HERE', self.dataset)
-    
-        elif string.find(line, '# NO_LOOPS_IS_DEFAULT') > -1:
-            
-            if hasattr(self, 'datelist'):   
-                dates = ""
-            
-                loop_comm = ""
-            
-                # Work out how many variables we should define for dates
-                nvars = int(len(self.datelist))
-                #vars=[]
-                #if (len(self.datelist)%5) != 0: 
-                #    nvars = nvars+1
-                #print "NCVARS", nvars
-                
-                '''
-                for n in range(0,nvars):
-                    s = n*5
-                    dates = ""
-                    for i in range(s,s+5):
-                       #print i, n
-                        if i == (len(self.datelist)):
-                            break
-                        else:
-                            dates = dates+"%s/" % (self.datelist[i]) 
-                    print dates
-                        
-                    loop_comm = loop_comm+"\nV%d='%s'\n" % (n, dates[:-1])
-                '''
-                for n in range(0, nvars):
-                    dates = '%s/' % self.datelist[n]
-                    loop_comm = loop_comm+"\nV%d='%s'\n" % (n, dates[:-1])
-                loop_comm = loop_comm+"\nfor DATE in"
-
-                for n in range(0,nvars):
-                    loop_comm = loop_comm+" $V%d" % n
-
-                loop_comm = loop_comm+"\ndo\n"
-
-                line = string.replace(line, '# NO_LOOPS_IS_DEFAULT', loop_comm)    
-
-            else:
-
-                line = string.replace(line, '# NO_LOOPS_IS_DEFAULT', "")         
-
+        
         elif string.find(line, 'PUT_DATE_HERE')>-1:
         
           if hasattr(self, 'datelist'):
-              line=string.replace(line, 'PUT_DATE_HERE', "$DATE")
+              dates = '/'.join(self.datelist)      
+          
+              line=string.replace(line, 'PUT_DATE_HERE', dates)
           else:
                 line=string.replace(line, 'PUT_DATE_HERE', self.start)
         elif string.find(line, 'TARGET_DIR')>-1:
@@ -276,7 +227,7 @@ if __name__=="__main__":
     if len(args) < 2:
        exitNicely("Not enough arguments given.")
 
-    keywords={'qos':'normal'}
+    keywords={}
     dataset=args[-1]
 
     #print args
@@ -307,13 +258,16 @@ if __name__=="__main__":
 
         elif arg in ["-f","-filename", "-file", "-file_template"]:
                 keywords['file_template'] = args[args.index(arg)+1]
-        
-        elif arg in ["--qos"]:
+
+        elif arg == '--qos':
                 keywords['qos'] = args[args.index(arg) + 1]
-        
+                
     if not keywords.has_key('start') and not keywords.has_key('ago'):
     
        #exitNicely("No start date or 'ago' argument provided.")
        keywords['ago'] = '10'
-   
+    
+    if not keywords.has_key('qos') :
+        keywords['qos'] = 'normal'
+        
     x = MarsJob(dataset, keywords) 

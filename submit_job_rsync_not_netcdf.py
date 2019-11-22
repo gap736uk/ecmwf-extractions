@@ -65,7 +65,7 @@ sys.path.append(os.path.join(templatedir, 'common'))
 
 
 # Import commands from local modules
-from sl_tmp import *
+from slr_tmp import sl_commands
 from slmkdir_tmp import mkdir_commands
 from slconvert_to_netcdf import convert_commands
 from sltransfer_options_tmp import transfer_commands
@@ -99,7 +99,7 @@ class MarsJob:
     if dataset[-4:] != ".tmp":
         dataset += '.tmp'
 
-           
+    #import pdb;pdb.set_trace()        
     self.template = os.path.join(templatedir, self.superset, dataset)
     self.job_script = []  
     
@@ -112,8 +112,7 @@ class MarsJob:
       else:
           self.target_dir=target_dirs[self.dparts[0]+"-"+self.dparts[1]]
 
-    # Set keywords as instance attributes
-    
+    # Set keywords as instance attributes 
     for key in kw.keys():
         setattr(self, key, kw[key])
 
@@ -131,8 +130,6 @@ class MarsJob:
     # Run each method
     self.compileParts()
     print self.writeJobFile()
-
-
     self.submitJob()
 
 
@@ -143,21 +140,9 @@ class MarsJob:
 
   def compileParts(self):
     job_info = open(self.template, 'r').readlines()
-    
-    linelist = sl_commands
-    if self.qos == 'long':
-        linelist += sl_commands_long+["\n"]
-    elif self.qos == 'large':
-        linelist += sl_commands_large+["\n"]
-    elif self.qos == 'express':
-        linelist += sl_commands_express+["\n"]
-    elif self.qos == 'timecrit1':
-        linelist += sl_commands_timecrit1 + ["\n"]
-    
-    linelist +=  rsync_command + ["\n"] + loop_commands+["\n"] + mkdir_commands + ["\n"] + job_info+["\n"]
-    
-    linelist += [i+"\n" for i in convert_commands.split("\n")] + ["\n"] + endloop_commands
-    linelist += [i+"\n" for i in transfer_commands.split("\n")] + ["\n"] + rmdir_commands + ["\n"] + endloop_commands
+    linelist = sl_commands+["\n"] + loop_commands+["\n"] + mkdir_commands + ["\n"] + job_info+["\n"]
+    #linelist = linelist + [i+"\n" for i in convert_commands.split("\n")] + ["\n"] + endloop_commands
+    linelist = linelist + [i+"\n" for i in transfer_commands.split("\n")] + ["\n"] + rmdir_commands + ["\n"] + endloop_commands
 
     for line in linelist:
     
@@ -257,7 +242,7 @@ class MarsJob:
     # Open output file to create job
     # Get process ID to create unique filename
     pid=str(os.getpid())
-    self.jobfile=os.path.join(jobdir, self.dataset+"_"+pid+".job")
+    self.jobfile=os.path.join(jobdir, dataset+"_"+pid+".job")
     job=open(self.jobfile, 'w')
     for line in self.job_script:
         job.write(line+"\n")
@@ -266,6 +251,9 @@ class MarsJob:
 
 
   def submitJob(self):
+    #os.system('/usr/local/share/qsub %s' % self.jobfile)
+    #os.system('/usr/lpp/LoadL/full/bin/llsubmit %s > /dev/null 2> /dev/null' % self.jobfile)
+    #os.system('export MARS_MULTITARGET_STRICT_FORMAT=1')
     os.system('sbatch %s > dev null 2 /dev/null'% self.jobfile)
     return "Job submitted successfully."
 
@@ -276,7 +264,7 @@ if __name__=="__main__":
     if len(args) < 2:
        exitNicely("Not enough arguments given.")
 
-    keywords={'qos':'normal'}
+    keywords={}
     dataset=args[-1]
 
     #print args
@@ -307,10 +295,8 @@ if __name__=="__main__":
 
         elif arg in ["-f","-filename", "-file", "-file_template"]:
                 keywords['file_template'] = args[args.index(arg)+1]
-        
-        elif arg in ["--qos"]:
-                keywords['qos'] = args[args.index(arg) + 1]
-        
+
+
     if not keywords.has_key('start') and not keywords.has_key('ago'):
     
        #exitNicely("No start date or 'ago' argument provided.")
