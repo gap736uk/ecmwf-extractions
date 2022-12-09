@@ -1,0 +1,22 @@
+mars <<eor
+retrieve,
+ class=e4,
+ expver=1,
+ stream=da,
+ launch="",
+ use=n,
+ costonly=n,
+ accuracy=normal,
+ type=an,
+ format=packed,
+ levtype=pv,
+ levelist=2000,
+ area=global,
+ repres=ll,
+ grid=3.75/2.5,
+ param=3.128/54.128/131.128/132.128/133.128/203.128/129.128,
+ time=00,
+ date=PUT_DATE_HERE,
+ target="$WORK/llas_pv_[DATE][TIME].grb".
+end
+eor

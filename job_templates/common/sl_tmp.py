@@ -8,9 +8,19 @@ replacement for ll_tmp.py
 """
 
 sl_commands=['#!/bin/bash',
-             ' ',
-             'SBATCH --qos=normal',
-             'SBATCH --workdir=/scratch/ms/gb/ukc/scratchdir/',
-             'SBATCH --mail-type=FAIL',
-             'SBATCH --output=/home/ms/gb/ukc/slurm_output/slurm-%j.out',
-             'SBATCH --error=/home/ms/gb/ukc/slurm_output/slurm-%j.err']		       
+             '#SBATCH --workdir=/scratch/ms/gb/ukc/scratchdir/',
+             '#SBATCH --mail-type=FAIL',
+             '#SBATCH --output=/home/ms/gb/ukc/slurm_output/slurm-%j.out',
+             '#SBATCH --error=/home/ms/gb/ukc/slurm_output/slurm-%j.err']                  
+
+sl_commands_long=['#SBATCH --qos=long']
+             
+sl_commands_large=['#SBATCH --qos=large']
+             
+sl_commands_express=['#SBATCH --qos=express']
+
+sl_commands_timecrit1=['#SBATCH --qos=timecrit1']		       
+
+rsync_command =['export RSYNC_CONNECT_PROG="/usr/bin/connect -H proxy.ecmwf.int:2222 %H 873" ']
+
+strict_command = ['export MARS_MULTITARGET_STRICT_FORMAT=1']

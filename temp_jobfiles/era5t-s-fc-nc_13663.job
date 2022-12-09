@@ -1,0 +1,66 @@
+#!/bin/bash
+#SBATCH --workdir=/scratch/ms/gb/ukc/scratchdir/
+#SBATCH --mail-type=FAIL
+#SBATCH --output=/home/ms/gb/ukc/slurm_output/slurm-%j.out
+#SBATCH --error=/home/ms/gb/ukc/slurm_output/slurm-%j.err
+export MARS_MULTITARGET_STRICT_FORMAT=1
+
+WORK=$SCRATCHDIR
+mkdir -p $WORK
+if [ $? != 0 ]
+  then
+  echo "Could not make scratch directory so exiting!"
+  exit
+fi
+cd $WORK
+
+mars << eor
+retrieve,
+ class=ea,
+ date=$DATE,
+ expver=5,
+ param=33.235/34.235/38.235/37.235/41.235/42.235,
+ step=1/to/16/by/1,
+ stream=oper,
+ time=06:00:00/18:00:00,
+ levtype=sfc,
+ type=fc,
+ grid=0.25/0.25,
+ format=netcdf,
+ target="/scratch/ms/gb/ukc/era5t_extract_pre_split/era5t-s-fc-nc/ecmwf-era5t_{stream}_{type}_{levtype}_[DATE][time].grb"
+eor
+
+export MARS_MULTITARGET_STRICT_FORMAT=1
+
+
+V0='20221201/20221202/20221203'
+
+for DATE in $V0
+do
+
+WORK=$SCRATCHDIR
+mkdir -p $WORK
+if [ $? != 0 ]
+  then
+  echo "Could not make scratch directory so exiting!"
+  exit
+fi
+cd $WORK
+
+mars << eor
+retrieve,
+ class=ea,
+ date=$DATE,
+ expver=5,
+ param=33.235/34.235/38.235/37.235/41.235/42.235,
+ step=1/to/16/by/1,
+ stream=oper,
+ time=06:00:00/18:00:00,
+ levtype=sfc,
+ type=fc,
+ grid=0.25/0.25,
+ format=netcdf,
+ target="/scratch/ms/gb/ukc/era5t_extract_pre_split/era5t-s-fc-nc/ecmwf-era5t_{stream}_{type}_{levtype}_[DATE][time].grb"
+eor
+
+done

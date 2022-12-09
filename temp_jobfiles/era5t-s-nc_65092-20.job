@@ -1,0 +1,8 @@
+#!/bin/bash
+#SBATCH --workdir=/scratch/ms/gb/ukc/scratchdir/
+#SBATCH --mail-type=FAIL
+#SBATCH --output=/home/ms/gb/ukc/slurm_output/slurm-%j.out
+#SBATCH --error=/home/ms/gb/ukc/slurm_output/slurm-%j.err
+#SBATCH --qos=timecrit1
+#SBATCH --time=00:59:30
+python /home/ms/gb/ukc/grib_splitter_call.py /scratch/ms/gb/ukc/era5_temp_files/era5t-s-nc-20 era5t-s-nc > dev null 2 /dev/null

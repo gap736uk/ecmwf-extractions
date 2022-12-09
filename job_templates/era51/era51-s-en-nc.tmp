@@ -1,0 +1,14 @@
+mars << eor
+retrieve,
+ class=ea,
+ date=PUT_DATE_HERE,
+ expver=51,
+ levtype=sfc,
+ number=0/to/9/by/1,
+ param=165.128/166.128/168.128/167.128/151.128/34.128/31.128/235.128/164.128/137.128,
+ stream=enda,
+ time=0/to/21/by/3,
+ type=an,
+ grid=0.25/0.25,
+ target="/scratch/ms/gb/ukc/era51_extract/era51-s-en-nc/ecmwf-era51_{stream}_{type}_{levtype}_[DATE][time].mem[number].{shortName}.grb".
+eor

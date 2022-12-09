@@ -1,0 +1,24 @@
+emmars <<eor
+retrieve,
+ class=od,
+ expver=1,
+ stream=oper,
+ launch="",
+ use=n,
+ costonly=n,
+ accuracy=normal,
+ type=fc,
+ resol=av,
+ format=packed,
+ levtype=ml,
+ levellist=1/to/60/by/1,
+ area=global,
+ repres=ll,
+ grid=0.4/0.4,
+ param=133.128/130.128/131.128/132.128,
+ time=00,
+ timestep=03/to/24/by/03,
+ date=PUT_DATE_HERE,
+ target="$WORK/llfc_ml_[DATE][TIME].[PARAM].grb".
+end
+eor

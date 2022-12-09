@@ -117,8 +117,8 @@ class MarsJob:
         starttuple = (int(self.start[:4]), int(self.start[4:6]), int(self.start[6:8]))
         endtuple = (int(self.end[:4]), int(self.end[4:6]), int(self.end[6:8])) 
         self.datelist = times.createList(starttuple, endtuple, (1, "day"), listtype="string", formatstring="%Y%m%d")
-        #print self.datelist
-
+        print self.datelist
+        import pdb;pdb.set_trace()
     # If 'ago' keyword used then calculate the 'start' date
     if hasattr(self, 'ago'):
         self.start=self.getDaysAgo()

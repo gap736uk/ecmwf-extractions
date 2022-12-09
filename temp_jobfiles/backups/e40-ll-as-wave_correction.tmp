@@ -1,0 +1,22 @@
+mars <<eor
+retrieve,
+ class=e4,
+ expver=1,
+ stream=wave,
+ launch="",
+ use=n,
+ costonly=n,
+ accuracy=normal,
+ type=an,
+ format=packed,
+ area=global,
+ domain=g,
+ repres=ll,
+ grid=1.5/1.5,
+ param=230.140/232.140,
+ time=00/06/12/18,
+ date=PUT_DATE_HERE,
+ target="$WORK/lwas[DATE][TIME].[PARAM].grb".
+end
+eor
+

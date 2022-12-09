@@ -36,19 +36,16 @@ while [ $num_of_files -gt 0 ]
   
   # Now move the files to a temporary dir
   # and rsync across
-  mkdir rsync_1000
-  mv $next_1000_files rsync_1000
-  cd rsync_1000
+  # mkdir rsync_1000
+  # mv $next_1000_files rsync_1000
+  # cd rsync_1000
     
   # Now do the scping
   #setenv RSYNC_CONNECT_PROG `/usr/bin/connect -H proxy.ecmwf.int:2222 %H 873`
   #$ENV{"RSYNC_CONNECT_PROG"} = `/usr/bin/connect -H proxy.ecmwf.int:2222 %H 873`
 
-  rsync --password-file=/home/ms/gb/ukc/job_templates/common/.rsyncpwd ./* gparton@arrivals.ceda.ac.uk::gparton/TARGET_DIR --port=873 -v
+  rsync --password-file=/home/ms/gb/ukc/job_templates/common/.rsyncpwd ./* gparton@arrivals.ceda.ac.uk::gparton/TARGET_DIR --port=873 -v --remove-source-files
   
-  # Now delete those files that have been scped
-  cd ..
-  rm -fR rsync_1000
   
 done
 """

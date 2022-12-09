@@ -1,0 +1,19 @@
+[inProgress]
+
+[inTrial]
+era5-m-nc.tmp           # model level, analysis steps, with nc conversion
+era5-s-nc.tmp           # suface level, analsys steps, with nc conversion
+era5-s-fc-nc.tmp        # surface level, forecast steps 1-16, with nc conversion
+era5-s-en-sd-nc.tmp     # ensemble, surface level, spreads
+era5-s-en-mean-nc.tmp   # ensemble, surface level, means
+era5-s-en-nc.tmp        # ensemble, surface level, members
+
+[inPreperation]
+to prep for conversion
+era5-m-fc.tmp # model level, forecast parameters
+
+[to remove]
+
+
+[completed]
+era5-inv-nc.tmp # invariant parameters. Only needs extracting for one time stamp.

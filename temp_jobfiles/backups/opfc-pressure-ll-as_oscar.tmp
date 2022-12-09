@@ -1,0 +1,23 @@
+mars <<eor
+retrieve,
+ class=od,
+ expver=1,
+ stream=oper,
+ launch="",
+ use=n,
+ costonly=n,
+ accuracy=normal,
+ type=fc,
+ format=packed,
+ levtype=pres,
+ level=1/to/60/by/1,
+ area=global,
+ repres=ll,
+ grid=0.351/0.351,
+ param=128.128/130.128/131.128/132.128,
+ time=00/12,
+ timestep=00/to/24/by/03,
+ date=PUT_DATE_HERE,
+ target="$WORK/llfc_pres_[DATE][TIME].grb".
+end
+eor

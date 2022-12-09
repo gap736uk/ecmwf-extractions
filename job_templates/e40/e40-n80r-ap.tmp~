@@ -1,0 +1,27 @@
+mars << eor
+retrieve,
+ class=e4,
+ expver=1,
+ stream=da,
+ launch="",
+ use=n,
+ costonly=n,
+ accuracy=normal,
+ type=an,
+ format=packed,
+ levtype=pl,
+ level=1000/925/850/775/700/600/500/400/300/250/200/150/100/70/50/30/20/10/7/5/3/2/1,
+ area=global,
+ repres=gg,
+ grid=av,
+ param=60/133/203,
+ time=00/to/18/by/06,
+ date=PUT_DATE_HERE,
+ target="$WORK/ggap[DATE][TIME].grb"
+retrieve,
+ repres=gg,
+ grid=80,
+ param=131/132,
+ target="$WORK/ggap[DATE][TIME].grb".
+end
+eor

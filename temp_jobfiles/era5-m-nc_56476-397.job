@@ -1,0 +1,7 @@
+#!/bin/bash
+#SBATCH --workdir=/scratch/ms/gb/ukc/era5_processed/era5-m-nc
+#SBATCH --mail-type=FAIL
+#SBATCH --output=/home/ms/gb/ukc/slurm_output/slurm-%j.out
+#SBATCH --error=/home/ms/gb/ukc/slurm_output/slurm-%j.err
+#SBATCH --time=00:59:30
+$HOME/cronjobs/cronrun.bsh rsync --password-file=/home/ms/gb/ukc/job_templates/common/.rsyncpwd --files-from=/scratch/ms/gb/ukc/era5_temp_files/era5-m-nc-397 /scratch/ms/gb/ukc/era5_processed/era5-m-nc gparton@arrivals.ceda.ac.uk::gparton/ecmwf-era5-model --port=873 -v --remove-source-files

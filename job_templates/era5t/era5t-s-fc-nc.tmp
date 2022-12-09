@@ -1,0 +1,15 @@
+mars << eor
+retrieve,
+ class=ea,
+ date=PUT_DATE_HERE,
+ expver=5,
+ param=33.235/34.235/38.235/37.235/41.235/42.235,
+ step=1/to/16/by/1,
+ stream=oper,
+ time=06:00:00/18:00:00,
+ levtype=sfc,
+ type=fc,
+ grid=0.25/0.25,
+ format=netcdf,
+ target="/scratch/ms/gb/ukc/era5t_extract_pre_split/era5t-s-fc-nc/ecmwf-era5t_{stream}_{type}_{levtype}_[DATE][time].grb"
+eor

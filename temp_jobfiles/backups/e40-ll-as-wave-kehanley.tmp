@@ -1,0 +1,20 @@
+mars <<eor
+retrieve,
+ class=e4,
+ expver=1,
+ stream=wave,
+ launch="",
+ use=n,
+ costonly=n,
+ accuracy=normal,
+ type=an,
+ format=packed,
+ area=global,
+ repres=ll,
+ grid=1.5/1.5,
+ param=233.140/232.140/220.140,
+ time=00/to/18/by/06,
+ date=PUT_DATE_HERE,
+ target="$WORK/llas_wave_[DATE][TIME].grb".
+end
+eor

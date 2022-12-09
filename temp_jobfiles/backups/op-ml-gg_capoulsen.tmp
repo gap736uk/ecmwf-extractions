@@ -1,0 +1,22 @@
+mars << eor
+retrieve,
+ class=od,
+ expver=1,
+ stream=oper,
+ launch="",
+ use=n,
+ costonly=n,
+ accuracy=normal,
+ type=an,
+ format=packed,
+ levtype=ml,
+ levelist=0/to/60,
+ repres=gg,
+ grid=512,
+ gaussian=regular,
+ time=00/12,
+ step=0/3/6/9/12/15/18/21/24,
+ param=246.128/247.128/248.128,
+ date=PUT_DATE_HERE,
+ target="$WORK/ggap_[DATE][TIME]_[STEP]h.[PARAM].grb".
+eor

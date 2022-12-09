@@ -8,7 +8,16 @@ import sys
 
 def submit_list(grib_file_list, stream):
 
-    dest_folder = '/scratch/ms/gb/ukc/era5_processed/%s'% stream
+    
+    if 'era5t' in stream:
+        dest_folder = '/scratch/ms/gb/ukc/era5t_processed/%s'% stream
+    elif 'era51' in stream:
+        dest_folder = '/scratch/ms/gb/ukc/era51_processed/%s'% stream
+    else:
+        dest_folder = '/scratch/ms/gb/ukc/era5_processed/%s'% stream
+    
+    
+    
     for grib_file in grib_file_list:
         grib_file = grib_file.strip()
         name_bit = os.path.basename(grib_file)[:-3] + 'nc'

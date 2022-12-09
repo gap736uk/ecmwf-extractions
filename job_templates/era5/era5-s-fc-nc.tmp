@@ -9,7 +9,7 @@ retrieve,
  time=06:00:00/18:00:00,
  levtype=sfc,
  type=fc,
- grid=0.25/02.25,
+ grid=0.25/0.25,
  format=netcdf,
- target="$WORK/ecmwf-era5_{stream}_{type}_{levtype}_[DATE][time][step].{shortName}.grb"
+ target="/scratch/ms/gb/ukc/era5_extract_pre_split/era5-s-fc-nc/ecmwf-era5_{stream}_{type}_{levtype}_[DATE][time].grb"
 eor

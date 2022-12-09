@@ -1,0 +1,23 @@
+mars << eor
+retrieve,
+ class=od,
+ expver=1,
+ stream=da,
+ launch="",
+ use=n,
+ costonly=n,
+ accuracy=normal,
+ type=an,
+ format=packed,
+ levtype=sfc,
+ level=off,
+ area=47/6/45/8,
+ repres=gg,
+ grid=1.125/1.125,
+ param=134/151,
+ time=00/to/18/by/06, 
+ step=0,
+ date=PUT_DATE_HERE, 
+ target="$WORK/ggas[DATE][TIME].[PARAM].grb"
+end
+eor

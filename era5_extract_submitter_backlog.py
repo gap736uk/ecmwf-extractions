@@ -6,7 +6,7 @@ import subprocess
 import datetime
 import os
 import sys
-import submit_job_rsync_netcdf_era5
+import submit_job_rsync_netcdf_era5_new
 
 streams = ['era5-m-nc',
            #'era5-s-en-mean-nc',
@@ -68,7 +68,7 @@ if __name__=="__main__":
             keywords = {'start': command_parts[3],
                         'end': command_parts[5],
                         'target_dir': command_parts[-2],
-                        'qos' : 'express'
+                        'qos' : command_parts[7]
                         }
             '''
             if stream_to_rerun == 'era5-m-nc':
@@ -81,7 +81,7 @@ if __name__=="__main__":
 
             with open(os.path.join(base_path,backlog_job_file),'a') as job_log_file:
                 job_log_file.write(command_to_run)
-                x = submit_job_rsync_netcdf_era5.MarsJob(dataset, keywords)   
+                x = submit_job_rsync_netcdf_era5_new.MarsJob(dataset, keywords)   
 
 
         else:

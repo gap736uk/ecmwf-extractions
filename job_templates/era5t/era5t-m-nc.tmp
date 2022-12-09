@@ -1,0 +1,17 @@
+mars << eor
+retrieve,
+ class=ea,
+ date=PUT_DATE_HERE,
+ expver=5,
+ levtype=ml,
+ levelist=1,
+ param=129.128/152.128,
+ stream=oper,
+ time=0/to/23/by/1,
+ type=an,
+ grid=0.25/0.25,
+ target="/scratch/ms/gb/ukc/era5t_extract_pre_split/era5t-m-nc/ecmwf-era5t_{stream}_{type}_{levtype}_[DATE][time].grb".
+retrieve,
+ levelist=1/to/137/by/1,
+ param=130.128/131.128/132.128/133.128/138.128/203.128.
+eor

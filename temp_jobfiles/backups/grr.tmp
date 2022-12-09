@@ -1,0 +1,22 @@
+mars << eor
+retrieve,
+ class=od,
+ expver=1,
+ stream=oper,
+ launch="",
+ use=n,
+ costonly=n,
+ accuracy=normal,
+ type=fc,
+ format=packed,
+ levtype=sfc,
+ level=off,
+ area=global,
+ repres=ll,
+ grid=0.25/0.25,
+ time=00,
+ step=3,
+ param=165.128/166.128/31.128/169.128,
+ date=PUT_DATE_HERE,
+ target="$WORK/llfs_[DATE][TIME]_[STEP]h.grb".
+eor

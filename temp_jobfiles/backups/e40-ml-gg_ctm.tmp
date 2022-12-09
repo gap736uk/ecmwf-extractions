@@ -1,0 +1,20 @@
+mars << eor
+retrieve,
+ class=e4,
+ expver=1,
+ stream=da,
+ launch="",
+ use=n,
+ costonly=n,
+ accuracy=normal,
+ type=an,
+ format=packed,
+ levtype=ml,
+ levelist=0/to/60,
+ repres=sh,
+ resol=159,
+ time=00/06/12/18,
+ param=246.128/247.128/248.128,
+ date=PUT_DATE_HERE,
+ target="$WORK/spam_[DATE][TIME].[PARAM].grb".
+eor

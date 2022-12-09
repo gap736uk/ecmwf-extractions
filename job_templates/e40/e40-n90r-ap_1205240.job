@@ -1,0 +1,105 @@
+#!/bin/ksh
+
+#@ class = normal
+#@ cpu_limit = 1000
+#@ output = ~/loadleveler_output/$(jobid)
+#@ error =  ~/loadleveler_output/$(jobid)
+#@ queue
+
+
+V0='19970912'
+
+for DATE in $V0
+do
+
+WORK=$SCRATCH//home/ms/gb/ukc/job_templates/e40/e40-n90r-ap$$
+mkdir -p $WORK
+if [ $? != 0 ]
+  then
+  echo "Could not make scratch directory so exiting!"
+  exit
+fi
+cd $WORK
+
+mars << eor
+retrieve,
+ class=e4,
+ expver=1,
+ stream=da,
+ launch="",
+ use=n,
+ costonly=n,
+ accuracy=normal,
+ type=an,
+ format=packed,
+ levtype=pl,
+ level=1000/925/850/775/700/600/500/400/300/250/200/150/100/70/50/30/20/10/7/5/3/2/1,
+ area=global,
+ repres=gg,
+ grid=90,
+ param=60/130/133/203,
+ time=00/to/18/by/06,
+ date=$DATE,
+ target="$WORK/gpap[DATE][TIME].[PARAM].grb"
+retrieve,
+ repres=gg,
+ grid=90,
+ param=131/132,
+ target="$WORK/gpap[DATE][TIME].[PARAM].grb".
+end
+eor
+
+#
+# This section creates a loop around the scp
+# command so that if the number of files in this
+# directory is longer than the glob limit it will
+# move them out 1000 at a time and scp them from
+# another directory
+#
+
+# Initialise file list and length of it
+file_list=`ls`
+num_of_files=`ls | wc -w`
+
+while [ $num_of_files -gt 0 ]
+  do
+  # Set maximum number of files to glob
+  num=1000
+  # Get current length of file list
+  len=` echo $file_list | wc -w `
+  if [ $len -lt $num ]   # If less than glob limit scp all
+    then
+    next_1000_files=$file_list
+    file_list=""
+  else                   # otherwise get first 1000 files
+    next_1000_files=` echo $file_list | cut -d" " -f1-$num `
+    file_list=` echo $file_list | cut -d" " -f$num- `
+  fi
+  num_of_files=` echo $file_list | wc -w `
+
+  # Now move the files to a temporary dir
+  # and scp across
+  mkdir scp_1000
+  mv $next_1000_files scp_1000
+  cd scp_1000
+
+  # Now do the scping
+  scp -rv -i $HOME/.ssh/badc_fair * badc@fair.badc.rl.ac.uk:/deliveries/ecmwf-e40/arrivals
+
+  # Now delete those files that have been scped
+  cd ..
+  rm -fR scp_1000
+
+done
+
+
+if [ `pwd` = /home/ms/gb/ukc ]
+  then
+    echo "Stopped from deleting in HOME directory so exiting!"
+    exit
+fi
+rm *
+cd $HOME
+rmdir $WORK
+
+done

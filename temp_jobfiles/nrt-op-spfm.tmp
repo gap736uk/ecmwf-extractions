@@ -1,0 +1,21 @@
+mars << eor
+retrieve,
+ class=od,
+ expver=1,
+ stream=oper,
+ launch="",
+ use=n,
+ costonly=n,
+ accuracy=normal,
+ type=fc,
+ format=packed,
+ levtype=ml,
+ level=all,
+ area=global,
+ repres=sh,
+ param=130/131/132/135,
+ step=2/3/4/5/6/7/8,
+ time=0/12,
+ date=PUT_DATE_HERE,
+ target="$WORK/spfm[DATE][TIME].[STEP].[PARAM].grb".
+eor

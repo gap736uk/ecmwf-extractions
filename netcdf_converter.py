@@ -16,74 +16,80 @@ from sl_tmp import *
 stream = 'era5-s-nc'
 
 EXTRACT_BASE_DIR = '/scratch/ms/gb/ukc/era5_extract/%s/'
+EXTRACT_BASE_DIR_T = '/scratch/ms/gb/ukc/era5t_extract/%s/'
+EXTRACT_BASE_DIR_51 = '/scratch/ms/gb/ukc/era51_extract/%s/'
+
 PROCESSED_BASE_DIR =  '/scratch/ms/gb/ukc/era5_processed/%s'
+PROCESSED_BASE_DIR_T =  '/scratch/ms/gb/ukc/era5t_processed/%s'
+PROCESSED_BASE_DIR_51 =  '/scratch/ms/gb/ukc/era51_processed/%s'
+
 TEMP_FILE_FOLDER = '/scratch/ms/gb/ukc/era5_temp_files/'
 TEMP_JOB_FOLDER = '/home/ms/gb/ukc/temp_jobfiles'
 
 EXPECTED_MIN_SIZE = {'era5-m-nc' : {'z':  2076600,
                                    'lnsp': 2076600,
-                                    'o3' : 284658600,
-                                    'u' : 284658600,
-                                    'v' : 284658600,
-                                    'vo' : 284658600,
-                                    'q': 284658600,
-                                    't': 284658600
+                                    'o3' : 284655860,
+                                    'u' : 284655860,
+                                    'v' : 284655860,
+                                    'vo' : 284655860,    
+                                    'q': 284655860,
+                                    't': 284655860
                                     },
-                      'era5-s-nc':{'10u' : 2076600,
-                                   '10v' : 2076600,
-                                   '2d' : 2076600,
-                                   '2t' : 2076600,
-                                   'asn' : 2076600,
-                                   'cape' : 2076600,
-                                   'ci' : 1502760,
-                                   'msl' : 2076600,
-                                   'sd' : 2076600,
-                                   'skt' : 2076600,
-                                   'sst' : 1502760,
-                                   'tcc' : 2076600,
-                                   'tcwv': 2076600
+                      'era5-s-nc':{'asn' : 2076588, #2076600
+                                   'cape' : 2076588, #2076600
+                                   'sd' : 2076588, #2076600
+                                   '10u' : 2076588, #2076600,
+                                   '10v' :2076588, #2076600
+                                   '2d' : 2076588, #2076600,
+                                   '2t' : 2076588, #2076600,
+                                   'ci' : 1502034, #1502040,
+                                   'msl' : 2076588, #2076600,
+                                   'skt' : 2076588, #2076600,
+                                   'sst' : 1500240, #2076600,
+                                   'tcc' : 2076588, #2076600,
+                                   'tcwv': 2076588, #2076600
                                    },
-                      'era5-s-fc-nc':{'msshf' : 2076600,
-                                      'metss' : 2076600,
-                                      'mntss' : 2076600,
-                                      'mslhf' : 2076600,
-                                      'msnlwrf' : 2076600,
-                                      'msnswrf' : 2076600, 
-                                      'msshf10' : 2076600,
+                      'era5-s-fc-nc':{'msshf' : 2076588,
+                                      'metss' : 2076588,
+                                      'mntss' : 2076588,
+                                      'mslhf' : 2076588,
+                                      'msnlwrf' : 2076588,
+                                      'msnswrf' : 2076588, 
+                                      'msshf10' : 2076588,
                                       },
-                      'era5-s-en-mean-nc':{'10u' : 2076600,
-                                   '10v' : 2076600,
-                                   '2d' : 2076600,
-                                   '2t' : 2076600,
-                                   'ci' : 2076600,
-                                   'msl' : 2076600,
-                                   'skt' : 2076600,
-                                   'sst' : 2076600,
-                                   'tcc' : 2076600,
-                                   'tcwv': 2076600
+                      'era5-s-en-mean-nc':{'10u' : 2076592, #2076600,
+                                   '10v' :2076588, #2076600
+                                   '2d' : 2076588, #2076600,
+                                   '2t' : 2076588, #2076600,
+                                   'ci' : 1502034, #1502040,
+                                   'msl' : 2076592, #2076600,
+                                   'skt' : 2076592, #2076600,
+                                   'sst' : 1500240, #2076600,
+                                   'tcc' : 2076592, #2076600,
+                                   'tcwv': 2076592, #2076600
                                    },
-                      'era5-s-en-sd-nc':{'10u' : 2076600,
-                                   '10v' : 2076600,
-                                   '2d' : 2076600,
-                                   '2t' : 2076600,
-                                   'ci' : 1502040,
-                                   'msl' : 2076600,
-                                   'skt' : 2076600,
-                                   'sst' : 2076600,
-                                   'tcc' : 2076600,
-                                   'tcwv': 2076600
+                      'era5-s-en-sd-nc':{'10u' : 2076592, #2076600,
+                                   '10v' :2076588, #2076600
+                                   '2d' : 2076588, #2076600,
+                                   '2t' : 2076588, #2076600,
+                                   'ci' : 1502034, #1502040,
+                                   'msl' : 2076592, #2076600,
+                                   'skt' : 2076592, #2076600,
+                                   'sst' : 1500240, #2076600,
+                                   'tcc' : 2076592, #2076600,
+                                   'tcwv': 2076592, #2076600
                                    },
                     
-                      'era5-s-en-nc':{'10u' : 2076600,
-                                   '10v' : 2076600,
-                                   '2d' : 2076600,
-                                   '2t' : 2076600,
-                                   'ci' : 1502040,
-                                   'msl' : 2076600,
-                                   'skt' : 2076600,
-                                   'sst' : 2076600,
-                                   'tcc' : 2076600,
-                                   'tcwv': 2076600
+                      'era5-s-en-nc':{'10u' : 2076592, #2076600,
+                                   '10v' :2076588, #2076600
+                                   '2d' : 2076588, #2076600,
+                                   '2t' : 2076588, #2076600,
+                                   'ci' : 1502034, #1502040,
+                                   'msl' : 2076592, #2076600,
+                                   'skt' : 2076592, #2076600,
+                                   'sst' : 1500240, #2076600,
+                                   'tcc' : 2076592, #2076600,
+                                   'tcwv': 2076592, #2076600
                                    },
                       }
 
@@ -96,8 +102,31 @@ class ERA5_Process_Job:
         
         self.stream = stream
         self.qos = qos
+
+        if 'era5t' in stream:
+            
+            self.extract_base_dir  = EXTRACT_BASE_DIR_T% self.stream
+            era5_stream = self.stream.replace('era5t-','era5-')
+            self.expected_size_dict = EXPECTED_MIN_SIZE[era5_stream]
+        
+        elif 'era51' in stream:
+            
+            self.extract_base_dir  = EXTRACT_BASE_DIR_51% self.stream
+            era5_stream = self.stream.replace('era51-','era5-')
+            self.expected_size_dict = EXPECTED_MIN_SIZE[era5_stream]
         
         
+        elif  stream in ['era5-s-en-nc-1','era5-s-en-nc-2','era5-s-en-nc-3']:
+            
+            self.extract_base_dir = EXTRACT_BASE_DIR% self.stream
+            era5_split_stream = self.stream[:-2]
+            self.expected_size_dict = EXPECTED_MIN_SIZE[era5_split_stream]
+        
+        
+        else:
+            self.extract_base_dir = EXTRACT_BASE_DIR% self.stream
+            self.expected_size_dict = EXPECTED_MIN_SIZE[self.stream] 
+            
         self.send_for_conversion()
         self.conversion_dispatcher()
         
@@ -113,8 +142,8 @@ class ERA5_Process_Job:
 
         """
 
-        full_file_list = glob.glob(os.path.join(EXTRACT_BASE_DIR% self.stream,'*.grb'))
-
+        full_file_list = glob.glob(os.path.join(self.extract_base_dir,'*.grb'))
+        
         self.files_to_convert = []
         
         for grib_file in full_file_list:
@@ -123,8 +152,9 @@ class ERA5_Process_Job:
             last_mod_time = stats.st_mtime
             size = stats.st_size
             param = os.path.basename(grib_file).split('.')[-2]
-
-            if time.time() - last_mod_time > 120 and size >= EXPECTED_MIN_SIZE[self.stream][param]:
+            
+            if time.time() - last_mod_time > 120 and size >= self.expected_size_dict[param]:
+                   
                 self.files_to_convert.append(grib_file)
 
     def conversion_dispatcher(self):
@@ -203,7 +233,6 @@ if __name__ == "__main__":
     qos = 'express'
     if len(sys.argv) > 2:
         qos = sys.argv[2]
-
     job = ERA5_Process_Job(stream, qos)
     
     

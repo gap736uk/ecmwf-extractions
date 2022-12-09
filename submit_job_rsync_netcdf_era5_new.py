@@ -34,6 +34,7 @@ Where:
               following the MARS conventions.
     <dataset>    - is the dataset ID that you want to extract (e.g. op-2.5-as, op-t159-av,
                op-n80r-fs).
+    -m       - get latest era5 month's release
           
 
 Example usage:
@@ -52,6 +53,9 @@ import sys
 import string
 import re
 import time
+from datetime import date
+from dateutil.relativedelta import relativedelta
+
 
 sys.path.append('/home/ms/gb/ukc/python_controller')
 import times 
@@ -73,14 +77,28 @@ from slrmdir_tmp import rmdir_commands
 from slloops_tmp import loop_commands, endloop_commands
 from rsync_badc_dirs import target_dirs
 
-stream_div = {'era5-m-nc': 9,
-              'era5-m-nc-temp': 9,
+stream_div = {'era5-m-nc': 3,
+              'era5-m-nc-backfill': 9,
+              'era5-m-nc-lnsp-issue':1,
               'era5-s-nc': 3,
               'era5-s-fc-nc': 3,
-              'era5-s-en-nc': 3,
-              'era5-s-fc-nc': 9,
-              'era5-s-en-sd-nc': 9,
-              'era5-s-en-mean-nc': 9}
+              'era5-s-en-nc': 1,
+              'era5-s-en-sd-nc': 3,
+              'era5-s-en-mean-nc': 3,
+              'era51-m-nc': 3,
+              'era51-m-nc-backfill': 9,
+              'era51-s-nc': 3,
+              'era51-s-fc-nc': 3,
+              'era51-s-en-nc': 1,
+              'era51-s-en-sd-nc': 3,
+              'era51-s-en-mean-nc': 3,              
+              'era5t-m-nc': 3,
+              'era5t-m-nc-temp': 3,
+              'era5t-s-nc': 1,
+              'era5t-s-fc-nc': 3,
+              'era5t-s-en-nc': 2,
+              'era5t-s-en-sd-nc': 3,
+              'era5t-s-en-mean-nc': 3}
 
 
 def exitNicely(error=""):
@@ -123,22 +141,27 @@ class MarsJob:
     for key in kw.keys():
         setattr(self, key, kw[key])
 
+    # If 'ago' keyword used then calculate the 'start' date
+
+    if hasattr(self, 'ago'):
+        self.end=self.getDaysAgo(self.ago)
+        if 'era5t' in self.dataset:
+            self.start = self.getDaysAgo(str(int(self.ago) + 2))
+    
+        else:
+            self.start = self.getDaysAgo()
+     
     # Create a list of dates if keyword 'end' provided
     if hasattr(self, 'end'):
         starttuple = (int(self.start[:4]), int(self.start[4:6]), int(self.start[6:8]))
         endtuple = (int(self.end[:4]), int(self.end[4:6]), int(self.end[6:8])) 
         self.datelist = times.createList(starttuple, endtuple, (1, "day"), listtype="string", formatstring="%Y%m%d")
-        #print self.datelist
-
-    # If 'ago' keyword used then calculate the 'start' date
-    if hasattr(self, 'ago'):
-        self.start=self.getDaysAgo()
-
+   
     # Run each method
     self.compileParts()
     print self.writeJobFile()
 
-
+   
     self.submitJob()
 
 
@@ -160,10 +183,12 @@ class MarsJob:
     elif self.qos == 'timecrit1':
         linelist += sl_commands_timecrit1 + ["\n"]
     
+    linelist +=  strict_command + ["\n"] + mkdir_commands + ["\n"] + job_info+["\n"]
+    
     linelist +=  strict_command + ["\n"] + loop_commands+["\n"] + mkdir_commands + ["\n"] + job_info+["\n"]
     
     linelist += endloop_commands
-
+    
     for line in linelist:
     
     
@@ -176,9 +201,12 @@ class MarsJob:
                 dates = ""
             
                 loop_comm = ""
+                stream_div[self.dataset] = len(self.datelist)
             
                 # Work out how many variables we should define for dates
-                nvars = int(len(self.datelist))/stream_div[self.dataset]
+                nvars = 1 #int(len(self.datelist))/stream_div[self.dataset]
+                
+                
                 vars=[]
                 if (len(self.datelist)%stream_div[self.dataset]) != 0: 
                     nvars = nvars+1
@@ -251,9 +279,9 @@ class MarsJob:
     return "Job compiled correctly"
 
 
-  def getDaysAgo(self):
+  def getDaysAgo(self, days_ago):
     # Gets the date for the number of days ago and returns it.
-    seconds=int(self.ago)*86400
+    seconds=int(days_ago)*86400
     t=time.time()-seconds
     lt=time.localtime(t)
     return "%.4d%.2d%.2d" % (lt[0],lt[1],lt[2])    
@@ -272,6 +300,7 @@ class MarsJob:
 
 
   def submitJob(self):
+    
     os.system('sbatch %s > dev null 2 /dev/null'% self.jobfile)
     return "Job submitted successfully."
 
@@ -312,6 +341,14 @@ if __name__=="__main__":
 
         elif arg in ["-f","-filename", "-file", "-file_template"]:
                 keywords['file_template'] = args[args.index(arg)+1]
+
+        elif arg in ["-m"]:
+            
+            earlier_month = date.today() + relativedelta(months=-3)
+            start = earlier_month + relativedelta(day=1)
+            end   = earlier_month + relativedelta(day=31)
+            keywords['start'] = start.strftime("%Y%m%d")
+            keywords['end'] = end.strftime("%Y%m%d")
         
         elif arg in ["--qos"]:
                 keywords['qos'] = args[args.index(arg) + 1]
@@ -319,7 +356,11 @@ if __name__=="__main__":
     if not keywords.has_key('start') and not keywords.has_key('ago'):
     
        #exitNicely("No start date or 'ago' argument provided.")
-       keywords['ago'] = '10'
+        if 'era5t' in dataset:
+            keywords['ago'] = '6'
+        else:
+            keywords['ago'] = '10'
+           
     if not keywords.has_key('qos'):
         keywords['qos'] = 'normal'
     

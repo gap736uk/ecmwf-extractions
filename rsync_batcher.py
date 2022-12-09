@@ -15,87 +15,105 @@ from sl_tmp import *
 
 
 PROCESSED_BASE_DIR =  '/scratch/ms/gb/ukc/era5_processed/%s'
+PROCESSED_BASE_DIR_T =  '/scratch/ms/gb/ukc/era5t_processed/%s'
+PROCESSED_BASE_DIR_51 =  '/scratch/ms/gb/ukc/era51_processed/%s'
+
 TEMP_FILE_FOLDER = '/scratch/ms/gb/ukc/era5_temp_files/'
 TEMP_JOB_FOLDER = '/home/ms/gb/ukc/temp_jobfiles'
 CEDA_ARRIVALS_AREAS = {'era5-s-nc':'ecmwf-era5',
                        'era5-s-fc-nc':'ecmwf-era5-fc',
                        'era5-m-nc':'ecmwf-era5-model',
                        'era5-s-en-nc':'ecmwf-era5-en-mem',
+                       'era5-s-en-nc-1':'ecmwf-era5-en-mem-1',
+                       'era5-s-en-nc-2':'ecmwf-era5-en-mem-2',
+                       'era5-s-en-nc-3':'ecmwf-era5-en-mem-3',
                        'era5-s-en-mean-nc':'ecmwf-era5-en-mean',
-                       'era5-s-en-sd-nc':'ecmwf-era5-en-mean'
+                       'era5-s-en-sd-nc':'ecmwf-era5-en-mean',
+                       'era5t-s-nc':'ecmwf-era5t',
+                       'era5t-s-fc-nc':'ecmwf-era5t-fc',
+                       'era5t-m-nc':'ecmwf-era5t-model',
+                       'era5t-s-en-nc':'ecmwf-era5t-en-mem',
+                       'era5t-s-en-mean-nc':'ecmwf-era5t-en-mean',
+                       'era5t-s-en-sd-nc':'ecmwf-era5t-en-mean',
+                       'era51-s-nc':'ecmwf-era51',
+                       'era51-s-fc-nc':'ecmwf-era51-fc',
+                       'era51-m-nc':'ecmwf-era51-model',
+                       'era51-s-en-nc':'ecmwf-era51-en-mem',
+                       'era51-s-en-mean-nc':'ecmwf-era51-en-mean',
+                       'era51-s-en-sd-nc':'ecmwf-era51-en-mean',
                        }
 
 EXPECTED_MIN_SIZE = {'era5-m-nc' : {'z':     1200000,
-                                   'lnsp':   1590000,
-                                    'o3' :  33000000,
-                                    'u' :  205000000,
-                                    'v' :  209000000,
+                                   'lnsp':   1500000,
+                                    'o3' :  25000000,
+                                    'u' :  200000000,
+                                    'v' :  200000000,
                                     'vo' : 168000000,
-                                    'q':   81000000,
+                                    'q':   61000000,
                                     't':   210000000,
                                     },
-                      'era5-s-nc':{'10u' : 1800000,
-                                   '10v' : 1800000,
-                                   '2d' :  1600000,
-                                   '2t' :  1600000,
+                      'era5-s-nc':{'10u' : 1500000,
+                                   '10v' : 1300000,
+                                   '2d' :  1500000,
+                                   '2t' :  1500000,
                                    'asn' :  60000,
                                    'cape' : 720000,
-                                   'ci' :   180000,
-                                   'msl' : 1700000,
-                                   'sd' :   50000,
+                                   'ci' :   150000,
+                                   'msl' : 1300000,
+                                   'sd' :   60000,
                                    'skt' : 1500000,
                                    'sst' : 900000,
-                                   'tcc' : 1300000,
-                                   'tcwv': 1680000
+                                   'tcc' : 1250000,
+                                   'tcwv': 1400000
                                    },
-                      'era5-s-fc-nc':{'metss' :   1300000,
-                                      'mntss' :   1300000,
-                                      'mslhf' :   1500000,
-                                      'msnlwrf' : 1800000,
-                                      'msnswrf' :  980000,
-                                      'msshf' :   1600000
+                      'era5-s-fc-nc':{'metss' :   1100000,
+                                      'mntss' :   1100000,
+                                      'mslhf' :   1100000,
+                                      'msnlwrf' : 1100000,
+                                      'msnswrf' :  960000,
+                                      'msshf' :   1100000
                                       },
-                      'era5-s-en-nc':{'10u' : 1800000,
-                                   '10v' : 1800000,
-                                   '2d' :  1600000,
-                                   '2t' :  1600000,
-                                   'asn' :  74000,
+                      'era5-s-en-nc':{'10u' : 1500000,
+                                   '10v' : 1300000,
+                                   '2d' :  1500000,
+                                   '2t' :  1500000,
+                                   'asn' :  60000,
                                    'cape' : 720000,
-                                   'ci' :   180000,
-                                   'msl' : 1700000,
-                                   'sd' :   65000,
-                                   'skt' : 1600000,
+                                   'ci' :   150000,
+                                   'msl' : 1300000,
+                                   'sd' :   60000,
+                                   'skt' : 1500000,
                                    'sst' : 900000,
-                                   'tcc' : 1300000,
-                                   'tcwv': 1680000
+                                   'tcc' : 1250000,
+                                   'tcwv': 1400000
                                    },
                         'era5-s-en-sd-nc':{'10u' : 1500000,
-                                   '10v' : 1500000,
+                                   '10v' : 1300000,
                                    '2d' :  1500000,
                                    '2t' :  1500000,
-                                   'asn' :  74000,
+                                   'asn' :  60000,
                                    'cape' : 720000,
-                                   'ci' :   180000,
-                                   'msl' : 1500000,
-                                   'sd' :   65000,
+                                   'ci' :   150000,
+                                   'msl' : 1300000,
+                                   'sd' :   60000,
                                    'skt' : 1500000,
                                    'sst' : 900000,
-                                   'tcc' : 1300000,
-                                   'tcwv': 1500000
+                                   'tcc' : 1250000,
+                                   'tcwv': 1400000
                                    },           
-                        'era5-s-mean-nc':{'10u' : 1500000,
-                                   '10v' : 1500000,
+                        'era5-s-en-mean-nc':{'10u' : 1500000,
+                                   '10v' : 1300000,
                                    '2d' :  1500000,
                                    '2t' :  1500000,
-                                   'asn' :  74000,
+                                   'asn' :  60000,
                                    'cape' : 720000,
-                                   'ci' :   180000,
-                                   'msl' : 1500000,
-                                   'sd' :   65000,
+                                   'ci' :   150000,
+                                   'msl' : 1300000,
+                                   'sd' :   60000,
                                    'skt' : 1500000,
                                    'sst' : 900000,
-                                   'tcc' : 1300000,
-                                   'tcwv': 1580000
+                                   'tcc' : 125000,
+                                   'tcwv': 1400000
                                    },}
                       
                       
@@ -108,8 +126,37 @@ class ERA5_Rsync_Job:
         
         self.stream = stream
         self.qos = qos
-        self.source_dir = PROCESSED_BASE_DIR% self.stream
         
+        if 'era5t' in self.stream:
+            
+            era5_stream = self.stream.replace('era5t-','era5-')
+            
+            self.source_dir = PROCESSED_BASE_DIR_T% self.stream
+            self.processed_dir =  PROCESSED_BASE_DIR_T% self.stream
+            self.expected_size_dict =  EXPECTED_MIN_SIZE[era5_stream]       
+        
+        elif 'era51' in self.stream:
+            
+            era5_stream = self.stream.replace('era51-','era5-')
+            
+            self.source_dir = PROCESSED_BASE_DIR_51% self.stream
+            self.processed_dir =  PROCESSED_BASE_DIR_51% self.stream
+            self.expected_size_dict =  EXPECTED_MIN_SIZE[era5_stream]       
+        
+        elif self.stream in ['era5-s-en-nc-1','era5-s-en-nc-2','era5-s-en-nc-3']:
+            
+            era5_split_stream = self.stream[:-2]
+            
+            self.source_dir = PROCESSED_BASE_DIR% self.stream
+            self.processed_dir =  PROCESSED_BASE_DIR% self.stream
+            self.expected_size_dict =  EXPECTED_MIN_SIZE[era5_split_stream]       
+        
+        
+        else:
+            self.source_dir = PROCESSED_BASE_DIR% self.stream
+            self.processed_dir =  PROCESSED_BASE_DIR% self.stream
+
+            self.expected_size_dict =  EXPECTED_MIN_SIZE[self.stream]       
         self.send_for_transfer()
         self.transfer_dispatcher()
         
@@ -125,7 +172,7 @@ class ERA5_Rsync_Job:
 
         """
 
-        full_file_list = glob.glob(os.path.join(self.source_dir,'*.nc'))
+        full_file_list = glob.glob(os.path.join(self.source_dir,'*.*.nc'))
 
         self.files_to_send = []
         
@@ -136,7 +183,7 @@ class ERA5_Rsync_Job:
             size = stats.st_size
             param = os.path.basename(nc_file).split('.')[-2]
 
-            if time.time() - last_mod_time > 600 and size >= EXPECTED_MIN_SIZE[self.stream][param]:
+            if time.time() - last_mod_time > 600 and size >= self.expected_size_dict[param]:
                 self.files_to_send.append(os.path.basename(nc_file))
 
     def transfer_dispatcher(self):
@@ -173,7 +220,7 @@ class ERA5_Rsync_Job:
         self.job_script = list(sl_commands)
         self.job_script.append('#SBATCH --time=00:59:30')       
         
-        self.job_script[1] = '#SBATCH --workdir=%s'% PROCESSED_BASE_DIR% self.stream
+        self.job_script[1] = '#SBATCH --workdir=%s'% self.processed_dir
         
         if self.qos == 'long':
             self.job_script.extend(sl_commands_long)
