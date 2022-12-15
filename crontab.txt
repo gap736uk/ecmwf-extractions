@@ -1,0 +1,167 @@
+
+#-----------------------------------------------------------------------------
+#  tidy up operations
+#-----------------------------------------------------------------------------
+
+5 3 * * * $HOME/cronjobs/cronrun.bsh /usr/local/apps/python/2.7.3-02/bin/python /home/ms/gb/ukc/cronjobs/empty_SCRATCH.py >/dev/null 2>&1
+15 3 * * * $HOME/cronjobs/cronrun.bsh /usr/local/apps/python/2.7.3-02/bin/python /home/ms/gb/ukc/cronjobs/empty_temp_job_dirs.py >/dev/null 2>&1
+
+
+
+#-----------------------------------------------------------------------------
+#  operational data extactions
+#
+#
+#
+#
+#-----------------------------------------------------------------------------
+
+# 2.5 deg surface and pressure level gridded 6-hourly data 
+
+
+#40 22 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/submit_job_slurm.py op-2.5-ap >/dev/null 2>&1
+
+
+1 0 *  * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/submit_job_rsync.py op-2.5-ap >/dev/null 2>&1
+3 0 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/submit_job_rsync.py op-2.5-as  >/dev/null 2>&1 
+
+
+# 2.5 deg surface and pressure level gridded monthly mean data
+
+
+3 2 20 * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/submit_job_rsync.py -ago 40 op-2.5-mm >/dev/null 2>&1 
+
+# N80 Operational 6-hourly data
+
+
+6 0 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/submit_job_rsync.py op-n80-as  >/dev/null 2>&1
+9 0 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/submit_job_rsync.py op-n80-fs  >/dev/null 2>&1
+
+# 1.125 gridded data
+
+12 0 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/submit_job_rsync.py op-1.125-am   >/dev/null 2>&1
+
+# Op-as-e40 data
+
+15 0 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/submit_job_rsync.py op-n80r-am   >/dev/null 2>&1
+18 0 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/submit_job_rsync.py op-n80r-ap   >/dev/null 2>&1
+21 0 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/submit_job_rsync.py op-n80r-as   >/dev/null 2>&1 
+24 0 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/submit_job_rsync.py op-n80r-at   >/dev/null 2>&1
+27 0 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/submit_job_rsync.py op-n80r-av   >/dev/null 2>&1
+30 0 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/submit_job_rsync.py op-n80r-fm   >/dev/null 2>&1
+33 0 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/submit_job_rsync.py op-n80r-fs   >/dev/null 2>&1
+36 0 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/submit_job_rsync.py op-t159-am   >/dev/null 2>&1
+39 0 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/submit_job_rsync.py op-t159-ap   >/dev/null 2>&1
+42 0 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/submit_job_rsync.py op-t159-at   >/dev/null 2>&1
+
+#------------------------
+# ERA5 extractions
+#------------------------
+
+
+#latest available month extraction
+1 8 5 * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/submit_job_rsync_netcdf_era5_new.py -m --qos long -target ecmwf-era5 era5-s-nc
+31 8 5 * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/submit_job_rsync_netcdf_era5_new.py -m --qos long -target ecmwf-era5-fc era5-s-fc-nc
+1 10 5 * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/submit_job_rsync_netcdf_era5_new.py -m --qos long -target ecmwf-era5-en-mem era5-s-en-nc
+31 10 5 * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/submit_job_rsync_netcdf_era5_new.py -m --qos long -target ecmwf-era5-en-mean era5-s-en-mean-nc
+1 11 5 * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/submit_job_rsync_netcdf_era5_new.py -m --qos long -target ecmwf-era5-en-mean era5-s-en-sd-nc
+31 11 5 * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/submit_job_rsync_netcdf_era5_new_no_pre_splitting.py -m --qos long -target ecmwf-era5-model era5-m-nc
+
+
+
+
+
+#1 8 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/era5_extract_submitter.py era5-s-nc
+#2 8 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/era5_extract_submitter.py era5-s-en-mean-nc
+#3 8 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/era5_extract_submitter.py era5-s-en-sd-nc
+#3 8 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/era5_extract_submitter.py era5-s-fc-nc
+#4 8 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/era5_extract_submitter.py era5-m-nc
+#50 23 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/era5_extract_submitter.py era5-s-en-nc
+
+4 1 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/submit_job_rsync_netcdf_era5_new.py -a 6 -target ecmwf-era5t era5t-s-nc
+24 1 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/submit_job_rsync_netcdf_era5_new.py -a 6 -target ecmwf-era5t-en-mean era5t-s-en-mean-nc
+44 1 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/submit_job_rsync_netcdf_era5_new.py -a 6 -target ecmwf-era5t-en-mean era5t-s-en-sd-nc
+4 2 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/submit_job_rsync_netcdf_era5_new.py -a 6 -target ecmwf-era5t-fc era5t-s-fc-nc
+4 3 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/submit_job_rsync_netcdf_era5_new.py -a 6 -target ecmwf-era5t-model era5t-m-nc
+4 15 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/submit_job_rsync_netcdf_era5_new.py -a 6 -target ecmwf-era5t-en-mem era5t-s-en-nc
+
+
+13 */4 *  * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/grib_splitter_wrap.py era5-s-nc normal
+23 */4 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/grib_splitter_wrap.py era5-s-en-mean-nc normal 
+33 */4 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/grib_splitter_wrap.py era5-s-en-sd-nc normal
+33 */4 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/grib_splitter_wrap.py era5-s-en-nc-1 normal
+33 */4 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/grib_splitter_wrap.py era5-s-en-nc-2 normal
+33 */4 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/grib_splitter_wrap.py era5-s-en-nc-3 normal
+43 */4 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/grib_splitter_wrap.py era5-s-fc-nc normal
+18 */4 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/grib_splitter_wrap.py era5-m-nc normal
+3 */4 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/grib_splitter_wrap.py era5-s-en-nc normal
+
+13 */6 *  * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/grib_splitter_wrap.py era5t-s-nc timecrit1
+23 */6 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/grib_splitter_wrap.py era5t-s-en-mean-nc timecrit1
+33 */6 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/grib_splitter_wrap.py era5t-s-en-sd-nc timecrit1
+43 */6 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/grib_splitter_wrap.py era5t-s-fc-nc timecrit1
+18 */6 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/grib_splitter_wrap.py era5t-m-nc timecrit1
+3 */6 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/grib_splitter_wrap.py era5t-s-en-nc timecrit1
+
+18 */4 *  * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/netcdf_converter.py era5-s-nc express
+28 */4 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/netcdf_converter.py era5-s-en-mean-nc express
+38 */4 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/netcdf_converter.py era5-s-en-sd-nc express
+48 */4 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/netcdf_converter.py era5-s-fc-nc express
+22 */4 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/netcdf_converter.py era5-m-nc express
+5 */4 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/netcdf_converter.py era5-s-en-nc express
+5 */4 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/netcdf_converter.py era5-s-en-nc-1 express
+5 */4 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/netcdf_converter.py era5-s-en-nc-2 express
+5 */4 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/netcdf_converter.py era5-s-en-nc-3 express
+
+
+
+#18 * *  * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/netcdf_converter.py era51-s-nc
+#28 * * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/netcdf_converter.py era51-s-en-mean-nc
+#38 * * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/netcdf_converter.py era51-s-en-sd-nc
+#48 * * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/netcdf_converter.py era51-s-fc-nc
+#22 * * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/netcdf_converter.py era51-m-nc
+#5 * * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/netcdf_converter.py era51-s-en-nc
+
+15 */4 *  * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/netcdf_converter.py era5t-s-nc timecrit1
+45 */4 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/netcdf_converter.py era5t-s-fc-nc timecrit1
+15 */4 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/netcdf_converter.py era5t-m-nc timecrit1
+5 */4 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/netcdf_converter.py era5t-s-en-mean-nc timecrit1
+6 */4 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/netcdf_converter.py era5t-s-en-sd-nc timecrit1
+5 */4 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/netcdf_converter.py era5t-s-en-nc timecrit1s
+
+
+28 */3 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/rsync_batcher.py era5-s-nc normal
+29 */3 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/rsync_batcher.py era5-s-en-mean-nc normal
+30 */3 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/rsync_batcher.py era5-s-en-sd-nc normal
+31 */3 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/rsync_batcher.py era5-s-fc-nc normal
+3 */3 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/rsync_batcher.py era5-m-nc normal
+33 */3 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/rsync_batcher.py era5-s-en-nc normal
+33 */3 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/rsync_batcher.py era5-s-en-nc-1 normal
+33 */3 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/rsync_batcher.py era5-s-en-nc-2 normal
+33 */3 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/rsync_batcher.py era5-s-en-nc-3 normal
+
+#28 */3 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/rsync_batcher.py era51-s-nc timecrit1
+#29 */3 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/rsync_batcher.py era51-s-en-mean-nc timecrit1
+#30 */3 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/rsync_batcher.py era51-s-en-sd-nc timecrit1
+#31 */3 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/rsync_batcher.py era51-s-fc-nc timecrit1
+#3 * * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/rsync_batcher.py era51-m-nc timecrit1
+#33 */3 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/rsync_batcher.py era51-s-en-nc timecrit1
+
+
+29 */3 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/rsync_batcher.py era5t-s-nc timecrit1
+33 */3 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/rsync_batcher.py era5t-s-fc-nc timecrit1
+5 */3 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/rsync_batcher.py era5t-m-nc timecrit1
+32 */3 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/rsync_batcher.py era5t-s-en-mean-nc timecrit1
+43 */3 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/rsync_batcher.py era5t-s-en-sd-nc timecrit1
+35 */3 * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/rsync_batcher.py era5t-s-en-nc timecrit1
+
+#00 * * * * $HOME/cronjobs/cronrun.bsh /home/ms/gb/ukc/era5_extract_submitter_backlog.py era5-m-nc
+
+
+#-----------------------------------------------------------------------------
+# daily extraction of ecmwf operational forecasts for PREDATE project
+# added 25/01/08 by GAP . switch off 10/03/08
+#-----------------------------------------------------------------------------
+#00 8 * * * /home/ms/gb/ukc/submit_job.py -ago 0 -target /requests/jvandermolen/ecmwf ~/temp_jobfiles/op-n512-fs
+#00 8 * * * /home/ms/gb/ukc/submit_job.py -ago 1 -target /requests/jvandermolen/ecmwf ~/temp_jobfiles/op-n512-as
+
