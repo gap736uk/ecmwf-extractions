@@ -1,0 +1,104 @@
+# OPERATIONAL JOBS
+#
+# Tar up all scripts and copy to tornado once a month
+#
+27 00 1,11,21 * * /home/ms/gb/ukf/cronjobs/tar_all.sh
+#
+# Delete un wanted files
+#
+33 18 * * * /usr/bin/find /home/ms/gb/ukf/. -name *~ -atime +1 -exec rm {} \;
+55 22 * * * /usr/bin/find /home/ms/gb/ukf/waitqueue/. -mtime +7 -exec rm {} \;
+#
+# Empty scratch directory if near full
+#
+41 * * * * /usr/local/bin/python /home/ms/gb/ukf/cronjobs/empty_SCRATCH.py > /dev/null 2>/dev/null
+#
+# Empty ~/loadleveler_output and ~/temp_jobfiles directories if large
+#
+33 * * * * /usr/local/bin/python /home/ms/gb/ukf/cronjobs/empty_temp_job_dirs.py
+#
+# 2.5 deg surface and pressure level gridded 6-hourly data 
+#
+40 22 * * * /home/ms/gb/ukf/submit_job.py op-2.5-ap > /dev/null 2>/dev/null
+41 22 * * * /home/ms/gb/ukf/submit_job.py op-2.5-as > /dev/null 2>/dev/null 
+#
+# 2.5 deg surface and pressure level gridded monthly mean data
+#
+37 23 20 * * /home/ms/gb/ukf/submit_job.py -ago 40 op-2.5-mm > /dev/null 2>/dev/null
+#
+# N80 Operational 6-hourly data
+#
+45 6 * * * /home/ms/gb/ukf/submit_job.py op-n80-as > /dev/null 2>/dev/null
+46 6 * * * /home/ms/gb/ukf/submit_job.py op-n80-fs > /dev/null 2>/dev/null
+#
+# 1.125 gridded data
+#
+46 6 * * * /home/ms/gb/ukf/submit_job.py op-1.125-am > /dev/null 2>/dev/null
+#
+# Op-as-e40 data
+#
+15 4 * * * /home/ms/gb/ukf/submit_job.py op-n80r-am > /dev/null 2>/dev/null
+17 4 * * * /home/ms/gb/ukf/submit_job.py op-n80r-ap > /dev/null 2>/dev/null
+19 4 * * * /home/ms/gb/ukf/submit_job.py op-n80r-as > /dev/null 2>/dev/null 
+21 4 * * * /home/ms/gb/ukf/submit_job.py op-n80r-at > /dev/null 2>/dev/null
+23 4 * * * /home/ms/gb/ukf/submit_job.py op-n80r-av > /dev/null 2>/dev/null 
+25 4 * * * /home/ms/gb/ukf/submit_job.py op-n80r-fm > /dev/null 2>/dev/null
+27 4 * * * /home/ms/gb/ukf/submit_job.py op-n80r-fs > /dev/null 2>/dev/null
+29 4 * * * /home/ms/gb/ukf/submit_job.py op-t159-am > /dev/null 2>/dev/null 
+31 4 * * * /home/ms/gb/ukf/submit_job.py op-t159-ap > /dev/null 2>/dev/null
+33 4 * * * /home/ms/gb/ukf/submit_job.py op-t159-at > /dev/null 2>/dev/null 
+#
+# TORCH 2004 Campaign support NRT data
+# switched off 22 July 2004 - Ag Stephens
+#
+#10 2,5,7,9,11,13 * * * /home/ms/gb/ukf/submit_job.py -target /badc/ecmwf-for/torch/.raw -ago 1 -p lnsp,t,u,v,w,vo,q op-1.125-am > /dev/null 2>/dev/null 
+#11 2,5,7,9,11,13 * * * /home/ms/gb/ukf/submit_job.py -target /badc/ecmwf-for/torch/.raw -ago 1 -p lnsp,t,u,v,w,vo,q -t 0,12 -step 0,6,12,18,24,30,36,42,48,54,60,66,72,78,84,90,96,102,108,114,120  op-1.125-fm > /dev/null 2>/dev/null 
+#10 14,16,18 * * * /home/ms/gb/ukf/submit_job.py -target /badc/ecmwf-for/torch/.raw -ago 1 -p lnsp,t,u,v,w,vo,q -t 18 op-1.125-am > /dev/null 2>/dev/null #
+# Missing Operational data: - collect job list from tornado
+#                           - execute jobs.
+#
+12 12 * * * /home/ms/gb/ukf/jobs_missed/ftp_collect_jobs.sh > /dev/null 2>/dev/null 
+15 12 * * * /home/ms/gb/ukf/jobs_missed/run_jobs.py > /dev/null 2>/dev/null
+#
+# VINTERSOL 2003 campaign - jobs for Martyn Chipperfield and Graham Mann - started 2003
+#
+35 1,5,10,17,23 * * * /home/ms/gb/ukf/submit_job.py -target /deliveries/ecmwf-for/slimcat -ago 1 op-n80r-am > /dev/null 2> /dev/null
+37 1,5,10,17,23 * * * /home/ms/gb/ukf/submit_job.py -target /deliveries/ecmwf-for/slimcat -ago 1 op-t159-am > /dev/null 2> /dev/null
+#
+# ITOP Campaign support - July 2004 - for Kirsty Pringle (Leeds)
+#                       - September 2004 - SWITCHED OFF!
+#25 5,10,17,23 * * * /home/ms/gb/ukf/submit_job.py -target /badc/ecmwf-for/itop/.raw -ago 1 -p cc,clwc op-n80r-fm > /dev/null 2> /dev/null
+#
+# CROZEX 2004 NERC Research Cruise - jobs for Ekaterina Popova - Started 25/08/04
+#                   STOPPED ON 02/03/05
+#
+#40 2,6,12,16,20 * * * /home/ms/gb/ukf/submit_job.py -target /badc/ecmwf-for/crozex/.raw -ago 1 -p 10u,10v -area -40,45,-50,55 -t 0,6,12,18 op-1.125-as > /dev/null 2> /dev/null
+#41 2,6,12,16,20 * * * /home/ms/gb/ukf/submit_job.py -target /badc/ecmwf-for/crozex/.raw -ago 1 -p 10u,10v,lsp,cp,sshf,slhf,ssr,str,ewss,nsss,e -area -40,45,-50,55 -t 0 -step 6/TO/240/BY/6 op-1.125-fs > /dev/null 2> /dev/null
+#
+# PAVE support - Started 05/01/04
+#      Stopped 3 March 2005
+# Note that large model level forecasts are staggered due to disk size limitations
+#
+#30 5 * * * /home/ms/gb/ukf/submit_job.py -target /disks/sunny2/project_spaces/pave/in -ago 1 op-n256r-am > /dev/null 2> /dev/null
+#01 6 * * * /home/ms/gb/ukf/submit_job.py -target /disks/sunny2/project_spaces/pave/in -ago 1 -p 130,138,152,155,203 -step 12,24 op-n256r-fm > /dev/null 2> /dev/null
+#31 6 * * * /home/ms/gb/ukf/submit_job.py -target /disks/sunny2/project_spaces/pave/in -ago 1 -p 130,138,152,155,203 -step 36,48 op-n256r-fm > /dev/null 2> /dev/null
+#01 7 * * * /home/ms/gb/ukf/submit_job.py -target /disks/sunny2/project_spaces/pave/in -ago 1 -p 130,138,152,155,203 -step 60,72 op-n256r-fm > /dev/null 2> /dev/null
+#31 7 * * * /home/ms/gb/ukf/submit_job.py -target /disks/sunny2/project_spaces/pave/in -ago 1 -p 130,138,152,155,203 -step 84,96 op-n256r-fm > /dev/null 2> /dev/null
+#01 8 * * * /home/ms/gb/ukf/submit_job.py -target /disks/sunny2/project_spaces/pave/in -ago 1 -p 130,138,152,155,203 -step 108,120 op-n256r-fm > /dev/null 2> /dev/null
+#23 8 * * * /home/ms/gb/ukf/submit_job.py -target /disks/sunny2/project_spaces/pave/in -ago 1 op-n256r-as > /dev/null 2> /dev/null
+#28 8 * * * /home/ms/gb/ukf/submit_job.py -target /disks/sunny2/project_spaces/pave/in -ago 1 op-n256r-fs > /dev/null 2> /dev/null
+#
+# 
+# TROCCINOX Campaign support NRT data
+# switched on 25 January 2005 - Ag Stephens
+#
+10 5,9,11,13 * * * /home/ms/gb/ukf/submit_job.py -target /badc/ecmwf-for/troccinox/.raw -ago 1 -p lnsp,t,u,v,w,vo,q op-1.125-am > /dev/null 2>/dev/null
+11 5,9,11,13 * * * /home/ms/gb/ukf/submit_job.py -target /badc/ecmwf-for/troccinox/.raw -ago 1 -p lnsp,t,u,v,w,vo,q -t 0,12 -step 6,12,18,24,30,36,42,48,54,60 op-1.125-fm > /dev/null 2>/dev/null
+33 5,9,11,13 * * * /home/ms/gb/ukf/submit_job.py -target /badc/ecmwf-for/troccinox/.raw -ago 1 -p lnsp,t,u,v,w,vo,q -t 0,12 -step 66,72,78,84,90,96,102,108,114,120  op-1.125-fm  > /dev/null 2>/dev/null 
+10 14,16,18 * * * /home/ms/gb/ukf/submit_job.py -target /badc/ecmwf-for/troccinox/.raw -ago 1 -p lnsp,t,u,v,w,vo,q -t 18 op-1.125-am > /dev/null 2>/dev/null 
+13 6,10,12 * * * /home/ms/gb/ukf/submit_job.py -target /badc/ecmwf-for/troccinox/.raw -ago 1 -file_template "PL250mb.[PARAM].[DATE].[TIME].grib" -l 250 -p t,u,v,w,q op-1.125-ap > /dev/null 2> /dev/null
+30 6,10,12 * * * /home/ms/gb/ukf/submit_job.py -target /badc/ecmwf-for/troccinox/.raw -ago 1 -file_template "TL370-395K.[PARAM].[DATE].[TIME].grib" -l 370,395 -p 54 op-1.125-at > /dev/null 2> /dev/null
+# 
+# CROSEX July 2007
+# 
+3 5,7 * * * /home/ms/gb/ukf/submit_job.py -target /requests/epopova/cruise2007/grib -ago 1 -t 00,06,12,18 -step 3,6,9,12,15,18,21,24,27,30,33,36,39,42,45,48,51,54,57,60,63,66,69,72,75,78,81,84,87,90,93,96,99,102,105,108,111,114,117,120,123,126,129,132,135,138,141,144,147,150,153,156,159,162,165,168,171,174,177,180,183,186,189,192,195,198,201,204,207,210,213,216,219,222,225,228,231,234,237,240 op-1.0-fs > /dev/null 2>/dev/null

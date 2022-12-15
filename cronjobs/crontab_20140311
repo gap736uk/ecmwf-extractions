@@ -1,0 +1,134 @@
+
+#-----------------------------------------------------------------------------
+#  tidy up operations
+#-----------------------------------------------------------------------------
+
+* * * * * $HOME/cronjobs/cronrun.ksh /usr/local/apps/python/2.7.3-02/bin/python /home/ms/gb/ukc/cronjobs/empty_SCRATCH.py >/dev/null 2>&1
+* * * * * $HOME/cronjobs/cronrun.ksh /usr/local/apps/python/2.7.3-02/bin/python /home/ms/gb/ukc/cronjobs/empty_temp_job_dirs.py >/dev/null 2>&1
+
+
+
+#-----------------------------------------------------------------------------
+#  operational data extactions
+#
+#
+#
+#
+#-----------------------------------------------------------------------------
+
+# 2.5 deg surface and pressure level gridded 6-hourly data 
+
+
+#40 22 * * * $HOME/cronjobs/cronrun.ksh /home/ms/gb/ukc/submit_job_slurm.py op-2.5-ap >/dev/null 2>&1
+
+
+41 22 * * * $HOME/cronjobs/cronrun.ksh /home/ms/gb/ukc/submit_job_rsync.py op-2.5-ap >/dev/null 2>&1
+41 22 * * * $HOME/cronjobs/cronrun.ksh /home/ms/gb/ukc/submit_job_rsync.py op-2.5-as  >/dev/null 2>&1 
+
+
+# 2.5 deg surface and pressure level gridded monthly mean data
+
+
+37 23 20 * * $HOME/cronjobs/cronrun.ksh /home/ms/gb/ukc/submit_job_rsync.py -ago 40 op-2.5-mm >/dev/null 2>&1 
+
+# N80 Operational 6-hourly data
+
+
+45 6 * * * $HOME/cronjobs/cronrun.ksh /home/ms/gb/ukc/submit_job_rsync.py op-n80-as  >/dev/null 2>&1
+46 6 * * * $HOME/cronjobs/cronrun.ksh /home/ms/gb/ukc/submit_job_rsync.py op-n80-fs  >/dev/null 2>&1
+
+# 1.125 gridded data
+
+46 6 * * * $HOME/cronjobs/cronrun.ksh /home/ms/gb/ukc/submit_job_rsync.py op-1.125-am   >/dev/null 2>&1
+
+# Op-as-e40 data
+
+15 4 * * * $HOME/cronjobs/cronrun.ksh /home/ms/gb/ukc/submit_job_rsync.py op-n80r-am   >/dev/null 2>&1
+17 4 * * * $HOME/cronjobs/cronrun.ksh /home/ms/gb/ukc/submit_job_rsync.py op-n80r-ap   >/dev/null 2>&1
+19 4 * * * $HOME/cronjobs/cronrun.ksh /home/ms/gb/ukc/submit_job_rsync.py op-n80r-as   >/dev/null 2>&1 
+21 4 * * * $HOME/cronjobs/cronrun.ksh /home/ms/gb/ukc/submit_job_rsync.py op-n80r-at   >/dev/null 2>&1
+23 4 * * * $HOME/cronjobs/cronrun.ksh /home/ms/gb/ukc/submit_job_rsync.py op-n80r-av   >/dev/null 2>&1
+25 4 * * * $HOME/cronjobs/cronrun.ksh /home/ms/gb/ukc/submit_job_rsync.py op-n80r-fm   >/dev/null 2>&1
+27 4 * * * $HOME/cronjobs/cronrun.ksh /home/ms/gb/ukc/submit_job_rsync.py op-n80r-fs   >/dev/null 2>&1
+29 4 * * * $HOME/cronjobs/cronrun.ksh /home/ms/gb/ukc/submit_job_rsync.py op-t159-am   >/dev/null 2>&1
+31 4 * * * $HOME/cronjobs/cronrun.ksh /home/ms/gb/ukc/submit_job_rsync.py op-t159-ap   >/dev/null 2>&1
+33 4 * * * $HOME/cronjobs/cronrun.ksh /home/ms/gb/ukc/submit_job_rsync.py op-t159-at   >/dev/null 2>&1
+
+
+
+#-----------------------------------------------------------------------------
+# daily extraction of ecmwf operational forecasts for PREDATE project
+# added 25/01/08 by GAP . switch off 10/03/08
+#-----------------------------------------------------------------------------
+#00 8 * * * /home/ms/gb/ukc/submit_job.py -ago 0 -target /requests/jvandermolen/ecmwf ~/temp_jobfiles/op-n512-fs
+#00 8 * * * /home/ms/gb/ukc/submit_job.py -ago 1 -target /requests/jvandermolen/ecmwf ~/temp_jobfiles/op-n512-as
+
+#-----------------------------------------------------------------------------
+# daily extraction of ecmwf operational analyses at 2.5 deg resolution 
+# for APPRIASE ADIENT project
+# added 20/02/08 by GAP . switch off 10/03/08
+#----------------------------------------------------------------------------
+#05 8 * * * /home/ms/gb/ukc/submit_job.py -ago 1 -target /deliveries/ecmwf-for/adient ~/temp_jobfiles/op-2.5-ap_mbane
+#07 8 * * * /home/ms/gb/ukc/submit_job.py -ago 1 -target /deliveries/ecmwf-for/adient ~/temp_jobfiles/op-2.5-as_mbane
+
+#-----------------------------------------------------------------------------
+# daily extraction of ecmwf operational analyses at 2.5 deg resolution 
+# for APPRIASE ADIENT project - Leeds group
+# added 20/02/08 by GAP . switch off 31/08/09
+#----------------------------------------------------------------------------
+#05 7 * * * /home/ms/gb/ukc/submit_job.py -ago 1 -target /deliveries/ecmwf-for/adient/leeds/ ~/temp_jobfiles/op-n80r-fm_adient
+#07 7 * * * /home/ms/gb/ukc/submit_job.py -ago 1 -target /deliveries/ecmwf-for/adient/leeds/ ~/job_templates/op/op-t159-am
+#09 7 * * * /home/ms/gb/ukc/submit_job.py -ago 1 -target /deliveries/ecmwf-for/adient/leeds/ ~/job_templates/op/op-n80r-as
+#11 7 * * * /home/ms/gb/ukc/submit_job.py -ago 1 -target /deliveries/ecmwf-for/adient/leeds/ ~/job_templates/op/op-n80r-am
+#------------------------------------------------------------------------------
+# daily extraction of ecmwf operational forecasts out to +1 day for
+# APPRAISE ADIENT project - Oxford group
+# added 10/03/08 by GAP. switch off 31/08/09
+# done as two sets to reflect times when data are available.
+# actually switched off 21/11/2013 by GAP
+#------------------------------------------------------------------------------
+
+#15 6 * * * /home/ms/gb/ukc/submit_job_slurm.py -ago 0 -target /deliveries/ecmwf-for/adient/oxford/ ~/temp_jobfiles/op-n80r-fs_00_adient_thomas
+#15 18 * * * /home/ms/gb/ukc/submit_job_slurm.py -ago 0 -target /deliveries/ecmwf-for/adient/oxford/ ~/temp_jobfiles/op-n80r-fs_12_adient_thomas
+
+#------------------------------------------------------------------------------
+#
+# daily extractions of ecmwf op forecasts out to +5 days for
+# L2p project
+# switched off 21/11/2013 by GAP
+#------------------------------------------------------------------------------
+
+#30 6 * * * /home/ms/gb/ukc/submit_job_slurm.py -ago 0 -target /deliveries/ecmwf-for/l2p-nrt/ ~/temp_jobfiles/op-ll-fs_ghrsst00
+#30 18 * * * /home/ms/gb/ukc/submit_job_slurm.py -ago 0 -target /deliveries/ecmwf-for/l2p-nrt/ ~/temp_jobfiles/op-ll-fs_ghrsst12
+
+
+#------------------------------------------------------------------------------
+#
+# daily extractions of ecmwf op forecasts out to +72 hours for
+# Catlin Arctic Survey
+#
+#------------------------------------------------------------------------------
+#30 6 * * * /home/ms/gb/ukc/submit_job.py -ago 10 -target /deliveries/ecmwf-for/catlin/ ~/temp_jobfiles/op-gg-fs_catlin00
+#30 18 * * * /home/ms/gb/ukc/submit_job.py -ago 10 -target /deliveries/ecmwf-for/catlin/ ~/temp_jobfiles/op-gg-fs_catlin12
+
+#------------------------------------------------------------------------------
+#
+# NRT extractions of ecmwf op analyses for
+# Volcanoe Ash project
+#
+#------------------------------------------------------------------------------
+#30 0,6,12,18 * * * /home/ms/gb/ukc/submit_job.py -ago 1 -target /deliveries/ecmwf-for/plume/ ~/temp_jobfiles/llas_plume_nrt
+#30 0,6,12,18 * * * /home/ms/gb/ukc/submit_job.py -ago 1 -target /deliveries/ecmwf-for/plume/ ~/temp_jobfiles/llam_plume_nrt
+#30 0,6,12,18 * * * /home/ms/gb/ukc/submit_job.py -ago 1 -target /deliveries/ecmwf-for/plume/ ~/temp_jobfiles/llam1_plume_nrt
+#30 0,6,12,18 * * * /home/ms/gb/ukc/submit_job.py -ago 1 -target /deliveries/ecmwf-for/plume/ ~/temp_jobfiles/llap_plume_nrt
+#30 0,6,12,18 * * * /home/ms/gb/ukc/submit_job.py -ago 1 -target /deliveries/ecmwf-for/plume/ ~/temp_jobfiles/op-1.125-am-plume
+
+
+#--------------------------------------------------------------------------------
+#
+# Extractions for Daniel Gerber
+#
+#--------------------------------------------------------------------------------
+
+#45 6 * * * $HOME/cronjobs/cronrun.ksh /home/ms/gb/ukc/submit_job_slurm.py -ago 1 -target /requests/dgerber/ecmwf-op-requests/ ~/temp_jobfiles/op-1.125-fm_daniel
+#45 6 * * * $HOME/cronjobs/cronrun.ksh /home/ms/gb/ukc/submit_job_slurm.py -ago 1 -target /requests/dgerber/ecmwf-op-requests/ ~/temp_jobfiles/op-1.125-fs_daniel

@@ -1,0 +1,7 @@
+#!/bin/bash
+export PATH=/usr/local/bin:$PATH
+export RSYNC_CONNECT_PROG="/usr/bin/connect -H proxy.ecmwf.int:2222 %H 873"
+. ~/.profile
+cd ~/slurm_output
+export MARS_MULTITARGET_STRICT_FORMAT=1
+$@
