@@ -5,6 +5,8 @@
 submit_job_rsync.py
 =============
 
+title needs changing
+
 Python control script for creating and executing MARS jobs
 from BADC templates.
 
