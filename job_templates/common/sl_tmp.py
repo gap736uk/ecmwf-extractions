@@ -8,10 +8,10 @@ replacement for ll_tmp.py
 """
 
 sl_commands=['#!/bin/bash',
-             '#SBATCH --workdir=/scratch/ms/gb/ukc/scratchdir/',
+             '#SBATCH --workdir=/scratch/ukc/',
              '#SBATCH --mail-type=FAIL',
-             '#SBATCH --output=/home/ms/gb/ukc/slurm_output/slurm-%j.out',
-             '#SBATCH --error=/home/ms/gb/ukc/slurm_output/slurm-%j.err']                  
+             '#SBATCH --output=/home/ukc/slurm_output/slurm-%j.out',
+             '#SBATCH --error=/home/ukc/slurm_output/slurm-%j.err']                  
 
 sl_commands_long=['#SBATCH --qos=long']
              

@@ -1,4 +1,4 @@
-#!/usr/local/apps/python/2.7.3-02/bin/python
+#!/usr/bin/python3.6
 
 """
 

@@ -51,7 +51,7 @@ if __name__=="__main__":
     listOfDates = readDateList(dateFile)
     for dateLine in  listOfDates.dates:
         dateElements = dateLine.strip().split()
-	print dateElements
+	print(dateElements)
 	if len(dateElements) > 1 :
         	if len(dateElements[1]) <2 :
 			dateElements[1] =  '0'+dateElements[1] 

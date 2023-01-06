@@ -8,8 +8,8 @@ import subprocess
 import datetime
 import string
 
-sys.path.append('/home/ms/gb/ukc/python_controller')
-sys.path.append('/home/ms/gb/ukc/job_templates/common')
+sys.path.append('/home/ukc/ecmwf-extractions/python_controller')
+sys.path.append('/home/ukc/ecmwf-extractions/job_templates/common')
 
 
 from sl_tmp import *
@@ -17,10 +17,10 @@ from sltransfer_options_tmp import transfer_commands
 
 stream = 'era5-s-nc'
 
-EXTRACT_BASE_DIR = '/scratch/ms/gb/ukc/era5_extract/%s/'
-PROCESSED_BASE_DIR =  '/scratch/ms/gb/ukc/era5_processed/%s'
-TEMP_FILE_FOLDER = '/scratch/ms/gb/ukc/era5_temp_files/'
-TEMP_JOB_FOLDER = '/home/ms/gb/ukc/temp_jobfiles'
+EXTRACT_BASE_DIR = '/scratch/ukc/era5_extract/%s/'
+PROCESSED_BASE_DIR =  '/scratch/ukc/era5_processed/%s'
+TEMP_FILE_FOLDER = '/scratch/ukc/era5_temp_files/'
+TEMP_JOB_FOLDER = '/home/ukc/temp_jobfiles'
 CEDA_ARRIVALS_AREAS = {'era5-s-nc':'ecmwf-era5',
                        'era5-s-fc-nc':'ecmwf-era5-fc',
                        'era5-m-nc':'ecmwf-era5-model',

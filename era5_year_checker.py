@@ -1,5 +1,4 @@
-#!/usr/local/apps/python/2.7.3-02/bin/python
-
+#!/usr/bin/python3.6
 
 
 import subprocess
@@ -110,7 +109,7 @@ if __name__ == "__main__":
             if stream == 'era5-s-en-nc':
                 keywords['qos'] = 'large'
 
-            print keywords, stream
+            print(keywords, stream)
             backfill_file = 'era5_control/%s-backfill.txt'%stream
             f = open(backfill_file, 'r')
             extracting_month = missing_days[0][0:6]

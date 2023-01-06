@@ -1,4 +1,4 @@
-#!/usr/local/apps/python/2.7.12-01/bin/python
+#!/usr/bin/python3.6
 
 import os
 import subprocess
@@ -10,11 +10,11 @@ def submit_list(grib_file_list, stream):
 
     
     if 'era5t' in stream:
-        dest_folder = '/scratch/ms/gb/ukc/era5t_processed/%s'% stream
+        dest_folder = '/scratch/ukc/era5t_processed/%s'% stream
     elif 'era51' in stream:
-        dest_folder = '/scratch/ms/gb/ukc/era51_processed/%s'% stream
+        dest_folder = '/scratch/ukc/era51_processed/%s'% stream
     else:
-        dest_folder = '/scratch/ms/gb/ukc/era5_processed/%s'% stream
+        dest_folder = '/scratch/ukc/era5_processed/%s'% stream
     
     
     

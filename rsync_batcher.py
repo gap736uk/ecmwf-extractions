@@ -7,19 +7,19 @@ import sys
 import subprocess
 import datetime
 
-sys.path.append('/home/ms/gb/ukc/python_controller')
-sys.path.append('/home/ms/gb/ukc/job_templates/common')
+sys.path.append('/home/ukc/python_controller')
+sys.path.append('/home/ukc/job_templates/common')
 
 
 from sl_tmp import *
 
 
-PROCESSED_BASE_DIR =  '/scratch/ms/gb/ukc/era5_processed/%s'
-PROCESSED_BASE_DIR_T =  '/scratch/ms/gb/ukc/era5t_processed/%s'
-PROCESSED_BASE_DIR_51 =  '/scratch/ms/gb/ukc/era51_processed/%s'
+PROCESSED_BASE_DIR =  '/scratch/ukc/era5_processed/%s'
+PROCESSED_BASE_DIR_T =  '/scratch/ukc/era5t_processed/%s'
+PROCESSED_BASE_DIR_51 =  '/scratch/ukc/era51_processed/%s'
 
-TEMP_FILE_FOLDER = '/scratch/ms/gb/ukc/era5_temp_files/'
-TEMP_JOB_FOLDER = '/home/ms/gb/ukc/temp_jobfiles'
+TEMP_FILE_FOLDER = '/scratch/ukc/era5_temp_files/'
+TEMP_JOB_FOLDER = '/home/ukc/temp_jobfiles'
 CEDA_ARRIVALS_AREAS = {'era5-s-nc':'ecmwf-era5',
                        'era5-s-fc-nc':'ecmwf-era5-fc',
                        'era5-m-nc':'ecmwf-era5-model',
@@ -233,7 +233,7 @@ class ERA5_Rsync_Job:
 
         
         target_dir = CEDA_ARRIVALS_AREAS[stream]
-        call_to_make = '$HOME/cronjobs/cronrun.bsh rsync --password-file=/home/ms/gb/ukc/job_templates/common/.rsyncpwd --files-from=%s %s gparton@arrivals.ceda.ac.uk::gparton/%s --port=873 -v --remove-source-files'% (file_list_file_path,self.source_dir,target_dir)
+        call_to_make = '/home/ukc/ecmwf-extractions/cronjobs/cronrun.bsh rsync --password-file=/home/ukc/job_templates/common/.rsyncpwd --files-from=%s %s gparton@arrivals.ceda.ac.uk::gparton/%s --port=873 -v --remove-source-files'% (file_list_file_path,self.source_dir,target_dir)
   
               
         self.job_script.append(call_to_make)

@@ -1,6 +1,4 @@
-#!/usr/local/apps/python/2.7.3-02/bin/python
-
-
+#!/usr/bin/python3.6
 
 import subprocess
 import datetime
@@ -39,7 +37,7 @@ def cmd_line_finder(file_path, test=0):
 if __name__=="__main__":
 
     args = sys.argv
-    print "\nExecuting '%s' with arguments: " % args[0], args[1:],"\n"
+    print("\nExecuting '%s' with arguments: " % args[0], args[1:],"\n")
     if len(args) < 2:
        exitNicely("Not enough arguments given.")
     stream=args[-1]
@@ -55,7 +53,7 @@ if __name__=="__main__":
     
     test = 0
     for stream_to_rerun in streams:
-        print stream_to_rerun
+        print(stream_to_rerun)
         #import pdb;pdb.set_trace()
         
         file_path = os.path.join(base_path, stream_to_rerun + '_reextract_list.txt')
@@ -85,4 +83,4 @@ if __name__=="__main__":
 
 
         else:
-            print 'no more jobs'
+            print('no more jobs')

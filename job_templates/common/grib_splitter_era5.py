@@ -73,7 +73,7 @@ def main(in_grib_file):
 if __name__ == "__main__":
 
     args = sys.argv
-    print "\nAttempting to split out files into different steps and parameters from > '%s'  " % args[1:],"\n"
+    print("\nAttempting to split out files into different steps and parameters from > '%s'  " % args[1:],"\n")
     if len(args) < 2:
        exitNicely("Not enough arguments given.")
 

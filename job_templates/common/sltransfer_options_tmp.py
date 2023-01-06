@@ -44,7 +44,7 @@ while [ $num_of_files -gt 0 ]
   #setenv RSYNC_CONNECT_PROG `/usr/bin/connect -H proxy.ecmwf.int:2222 %H 873`
   #$ENV{"RSYNC_CONNECT_PROG"} = `/usr/bin/connect -H proxy.ecmwf.int:2222 %H 873`
 
-  rsync --password-file=/home/ms/gb/ukc/job_templates/common/.rsyncpwd ./* gparton@arrivals.ceda.ac.uk::gparton/TARGET_DIR --port=873 -v --remove-source-files
+  rsync --password-file=/home/ukc/ecmwf-extractions/job_templates/common/.rsyncpwd ./* gparton@arrivals.ceda.ac.uk::gparton/TARGET_DIR --port=873 -v --remove-source-files
   
   
 done

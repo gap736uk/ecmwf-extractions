@@ -1,4 +1,4 @@
-#!/usr/local/apps/python/2.7.12-01/bin/python
+#!/usr/bin/python3.6
 
 import glob
 import time
@@ -7,24 +7,24 @@ import sys
 import subprocess
 import datetime
 
-sys.path.append('/home/ms/gb/ukc/python_controller')
-sys.path.append('/home/ms/gb/ukc/job_templates/common')
+sys.path.append('/home/ukc/ecmwf-extractions/python_controller')
+sys.path.append('/home/ukc/ecmwf-extractions/job_templates/common')
 
 
 from sl_tmp import *
 
 stream = 'era5-s-nc'
 
-EXTRACT_BASE_DIR = '/scratch/ms/gb/ukc/era5_extract/%s/'
-EXTRACT_BASE_DIR_T = '/scratch/ms/gb/ukc/era5t_extract/%s/'
-EXTRACT_BASE_DIR_51 = '/scratch/ms/gb/ukc/era51_extract/%s/'
+EXTRACT_BASE_DIR = '/scratch/ukc/era5_extract/%s/'
+EXTRACT_BASE_DIR_T = '/scratch/ukc/era5t_extract/%s/'
+EXTRACT_BASE_DIR_51 = '/scratch/ukc/era51_extract/%s/'
 
-PROCESSED_BASE_DIR =  '/scratch/ms/gb/ukc/era5_processed/%s'
-PROCESSED_BASE_DIR_T =  '/scratch/ms/gb/ukc/era5t_processed/%s'
-PROCESSED_BASE_DIR_51 =  '/scratch/ms/gb/ukc/era51_processed/%s'
+PROCESSED_BASE_DIR =  '/scratch/ukc/era5_processed/%s'
+PROCESSED_BASE_DIR_T =  '/scratch/ukc/era5t_processed/%s'
+PROCESSED_BASE_DIR_51 =  '/scratch/ukc/era51_processed/%s'
 
-TEMP_FILE_FOLDER = '/scratch/ms/gb/ukc/era5_temp_files/'
-TEMP_JOB_FOLDER = '/home/ms/gb/ukc/temp_jobfiles'
+TEMP_FILE_FOLDER = '/scratch/ukc/era5_temp_files/'
+TEMP_JOB_FOLDER = '/home/ukc/temp_jobfiles'
 
 EXPECTED_MIN_SIZE = {'era5-m-nc' : {'z':  2076600,
                                    'lnsp': 2076600,
@@ -202,7 +202,7 @@ class ERA5_Process_Job:
 
         
         self.job_script.append('#SBATCH --time=00:59:30')       
-        call_to_make =  'python /home/ms/gb/ukc/grib_to_netcdf_call.py %s %s > dev null 2 /dev/null'% (file_list_file_path,stream)
+        call_to_make =  'python /home/ukc/grib_to_netcdf_call.py %s %s > dev null 2 /dev/null'% (file_list_file_path,stream)
         self.job_script.append(call_to_make)
         
         self._writeJobFile()

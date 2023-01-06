@@ -6,7 +6,7 @@ Template file for the remove directories section of a job.
 
 """
 
-rmdir_commands=['if [ `pwd` = /home/ms/gb/ukc ]','  then',
+rmdir_commands=['if [ `pwd` = /home/ukc ]','  then',
                 '    echo "Stopped from deleting in HOME directory so exiting!"',
                 '    exit',
 		'fi',

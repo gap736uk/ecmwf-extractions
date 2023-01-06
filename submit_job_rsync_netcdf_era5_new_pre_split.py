@@ -1,4 +1,4 @@
-#!/usr/local/apps/python/2.7.3-02/bin/python
+#!/usr/bin/python3.6
 
 """
 
@@ -101,8 +101,8 @@ def exitNicely(error=""):
     """
     Nice error message that also prints usage string.
     """
-    print __doc__
-    print "\n",error,"\n"
+    print(__doc__)
+    print("\n",error,"\n")
     sys.exit()
 
 
@@ -155,7 +155,7 @@ class MarsJob:
    
     # Run each method
     self.compileParts()
-    print self.writeJobFile()
+    print(self.writeJobFile())
 
    
     self.submitJob()
@@ -206,19 +206,19 @@ class MarsJob:
                 vars=[]
                 if (len(self.datelist)%stream_div[self.dataset]) != 0: 
                     nvars = nvars+1
-                print "NCVARS", nvars
+                print("NCVARS", nvars)
                 
                 
                 for n in range(0,nvars):
                     s = n*stream_div[self.dataset]
                     dates = ""
                     for i in range(s,s+stream_div[self.dataset]):
-                        print i, n
+                        print(i, n)
                         if i == (len(self.datelist)):
                             break
                         else:
                             dates = dates+"%s/" % (self.datelist[i]) 
-                    print dates
+                    print(dates)
                         
                     loop_comm = loop_comm+"\nV%d='%s'\n" % (n, dates[:-1])
                 '''
@@ -303,7 +303,7 @@ class MarsJob:
 
 if __name__=="__main__":
     args = sys.argv
-    print "\nExecuting '%s' with arguments: " % args[0], args[1:],"\n"
+    print("\nExecuting '%s' with arguments: " % args[0], args[1:],"\n")
     if len(args) < 2:
        exitNicely("Not enough arguments given.")
     keywords = {}

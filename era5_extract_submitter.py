@@ -1,4 +1,4 @@
-#!/usr/local/apps/python/2.7.3-02/bin/python
+#!/usr/bin/python3.6
 
 
 
@@ -35,7 +35,7 @@ def cmd_line_finder(file_path, test=0):
 if __name__=="__main__":
 
     args = sys.argv
-    print "\nExecuting '%s' with arguments: " % args[0], args[1:],"\n"
+    print("\nExecuting '%s' with arguments: " % args[0], args[1:],"\n")
     if len(args) < 2:
        exitNicely("Not enough arguments given.")
     stream=args[-1]
@@ -65,9 +65,9 @@ if __name__=="__main__":
         keywords['qos'] = 'large'
     '''    
     dataset = command_parts[-1]
-    print dataset
+    print(dataset)
 
-    print keywords
+    print(keywords)
     x = submit_job_rsync_netcdf.MarsJob(dataset, keywords)   
 
 

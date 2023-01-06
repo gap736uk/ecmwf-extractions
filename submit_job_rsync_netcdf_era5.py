@@ -1,4 +1,4 @@
-#!/usr/local/apps/python/2.7.3-02/bin/python
+#!/usr/bin/python3.6
 
 """
 
@@ -78,8 +78,8 @@ def exitNicely(error=""):
     """
     Nice error message that also prints usage string.
     """
-    print __doc__
-    print "\n",error,"\n"
+    print(__doc__)
+    print("\n",error,"\n")
     sys.exit()
 
 
@@ -117,7 +117,7 @@ class MarsJob:
         starttuple = (int(self.start[:4]), int(self.start[4:6]), int(self.start[6:8]))
         endtuple = (int(self.end[:4]), int(self.end[4:6]), int(self.end[6:8])) 
         self.datelist = times.createList(starttuple, endtuple, (1, "day"), listtype="string", formatstring="%Y%m%d")
-        print self.datelist
+        print(self.datelist)
         import pdb;pdb.set_trace()
     # If 'ago' keyword used then calculate the 'start' date
     if hasattr(self, 'ago'):
@@ -125,7 +125,7 @@ class MarsJob:
 
     # Run each method
     self.compileParts()
-    print self.writeJobFile()
+    print(self.writeJobFile())
     self.submitJob()
 
 
@@ -223,7 +223,7 @@ class MarsJob:
 
 if __name__=="__main__":
     args = sys.argv
-    print "\nExecuting '%s' with arguments: " % args[0], args[1:],"\n"
+    print("\nExecuting '%s' with arguments: " % args[0], args[1:],"\n")
     if len(args) < 2:
        exitNicely("Not enough arguments given.")
 

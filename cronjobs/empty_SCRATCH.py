@@ -28,7 +28,7 @@ for line in quota:
         max=long(items[3])*0.9 # 10% safety threshold
 
 dirs=os.listdir(SCRATCH)
-print "Deleting old stuff from scratch."
+print("Deleting old stuff from scratch.")
 
 for dir in dirs:
     if dir=="scratchdir" or dir[0]==".": continue
@@ -36,5 +36,5 @@ for dir in dirs:
     creationTime=os.stat(scr_dir_path)[-1]
     if (now-creationTime)>threeHours and not os.listdir(scr_dir_path):
         comm="rm -Rf %s" % os.path.join(SCRATCH, dir)
-        print "Executing:",comm
+        print("Executing:",comm)
         os.system(comm)
