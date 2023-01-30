@@ -74,7 +74,7 @@ if __name__== "__main__":
      
     if os.path.exists(temp_file):
         
-        with file(temp_file,'r') as grib_list_file:
+        with open(temp_file,'r') as grib_list_file:
         
             grib_file_list = grib_list_file.readlines()
      

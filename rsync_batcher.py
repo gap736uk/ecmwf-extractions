@@ -1,4 +1,4 @@
-#!/usr/local/apps/python/2.7.12-01/bin/python
+#!/usr/bin/python3.6
 
 import glob
 import time
@@ -7,8 +7,8 @@ import sys
 import subprocess
 import datetime
 
-sys.path.append('/home/ukc/python_controller')
-sys.path.append('/home/ukc/job_templates/common')
+sys.path.append('/home/ukc/ecmwf-extractions/python_controller')
+sys.path.append('/home/ukc/ecmwf-extractions/job_templates/common')
 
 
 from sl_tmp import *
@@ -19,7 +19,7 @@ PROCESSED_BASE_DIR_T =  '/scratch/ukc/era5t_processed/%s'
 PROCESSED_BASE_DIR_51 =  '/scratch/ukc/era51_processed/%s'
 
 TEMP_FILE_FOLDER = '/scratch/ukc/era5_temp_files/'
-TEMP_JOB_FOLDER = '/home/ukc/temp_jobfiles'
+TEMP_JOB_FOLDER = '/home/ukc/ecmwf-extractions/temp_jobfiles'
 CEDA_ARRIVALS_AREAS = {'era5-s-nc':'ecmwf-era5',
                        'era5-s-fc-nc':'ecmwf-era5-fc',
                        'era5-m-nc':'ecmwf-era5-model',
@@ -57,7 +57,7 @@ EXPECTED_MIN_SIZE = {'era5-m-nc' : {'z':     1200000,
                                    '2d' :  1500000,
                                    '2t' :  1500000,
                                    'asn' :  60000,
-                                   'cape' : 720000,
+                                   'cape' : 666000,
                                    'ci' :   150000,
                                    'msl' : 1300000,
                                    'sd' :   60000,
@@ -78,7 +78,7 @@ EXPECTED_MIN_SIZE = {'era5-m-nc' : {'z':     1200000,
                                    '2d' :  1500000,
                                    '2t' :  1500000,
                                    'asn' :  60000,
-                                   'cape' : 720000,
+                                   'cape' : 666000,
                                    'ci' :   150000,
                                    'msl' : 1300000,
                                    'sd' :   60000,
@@ -92,7 +92,7 @@ EXPECTED_MIN_SIZE = {'era5-m-nc' : {'z':     1200000,
                                    '2d' :  1500000,
                                    '2t' :  1500000,
                                    'asn' :  60000,
-                                   'cape' : 720000,
+                                   'cape' : 666000,
                                    'ci' :   150000,
                                    'msl' : 1300000,
                                    'sd' :   60000,
@@ -106,7 +106,7 @@ EXPECTED_MIN_SIZE = {'era5-m-nc' : {'z':     1200000,
                                    '2d' :  1500000,
                                    '2t' :  1500000,
                                    'asn' :  60000,
-                                   'cape' : 720000,
+                                   'cape' : 666000,
                                    'ci' :   150000,
                                    'msl' : 1300000,
                                    'sd' :   60000,
@@ -197,7 +197,7 @@ class ERA5_Rsync_Job:
         remainder = len(self.files_to_send) % 10
         if group_size < 1:
             group_size = 10
-            
+        group_size = int(group_size)
         while self.files_to_send:
             self.sub_process_id = str(len(self.files_to_send))
 
@@ -213,14 +213,14 @@ class ERA5_Rsync_Job:
         self.time_stamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
         file_list_file_path = os.path.join(TEMP_FILE_FOLDER,self.stream + '-%s'% self.sub_process_id)
         
-        with file(file_list_file_path,'w') as write_file:
+        with open(file_list_file_path,'w') as write_file:
             for grib_path in grib_list:
                 write_file.write(grib_path+'\n')
         
         self.job_script = list(sl_commands)
         self.job_script.append('#SBATCH --time=00:59:30')       
         
-        self.job_script[1] = '#SBATCH --workdir=%s'% self.processed_dir
+        self.job_script[1] = '#SBATCH --chdir=%s'% self.processed_dir
         
         if self.qos == 'long':
             self.job_script.extend(sl_commands_long)
@@ -233,16 +233,16 @@ class ERA5_Rsync_Job:
 
         
         target_dir = CEDA_ARRIVALS_AREAS[stream]
-        call_to_make = '/home/ukc/ecmwf-extractions/cronjobs/cronrun.bsh rsync --password-file=/home/ukc/job_templates/common/.rsyncpwd --files-from=%s %s gparton@arrivals.ceda.ac.uk::gparton/%s --port=873 -v --remove-source-files'% (file_list_file_path,self.source_dir,target_dir)
-  
-              
+        #call_to_make = '/home/ukc/ecmwf-extractions/cronjobs/cronrun.bsh rsync --password-file=/home/ukc/ecmwf-extractions/job_templates/common/.rsyncpwd --files-from=%s %s gparton@arrivals.ceda.ac.uk::gparton/%s --port=873 -v --remove-source-files'% (file_list_file_path,self.source_dir,target_dir)
+        call_to_make = f'/home/ukc/ecmwf-extractions/cronjobs/cronrun.bsh python3.6 /home/ukc/ecmwf-extractions/ftp_transferer.py {file_list_file_path} {self.source_dir} {target_dir} > dev null 2 /dev/null'
+
         self.job_script.append(call_to_make)
         
         self._writeJobFile()
         
         self._submitJob()
         
-        
+        #lftp ftp://${username}@${host} -u ${username},${password} -e "mirror --Remove-source-files --verbose ${local_dir} ${remote_dir}; bye"
         
     def _writeJobFile(self):
         # Open output file to create job

@@ -1,2 +1,4 @@
 .rsyncpwd
+.ftppwd
 *.pyc
+temp_jobfiles/*.job

@@ -1,4 +1,4 @@
-#!/usr/local/apps/python/2.7.12-01/bin/python
+#!/usr/bin/python3.6
 
 import glob
 import time
@@ -20,7 +20,7 @@ stream = 'era5-s-nc'
 EXTRACT_BASE_DIR = '/scratch/ukc/era5_extract/%s/'
 PROCESSED_BASE_DIR =  '/scratch/ukc/era5_processed/%s'
 TEMP_FILE_FOLDER = '/scratch/ukc/era5_temp_files/'
-TEMP_JOB_FOLDER = '/home/ukc/temp_jobfiles'
+TEMP_JOB_FOLDER = '/home/ukc/ecmwf-extractions/temp_jobfiles'
 CEDA_ARRIVALS_AREAS = {'era5-s-nc':'ecmwf-era5',
                        'era5-s-fc-nc':'ecmwf-era5-fc',
                        'era5-m-nc':'ecmwf-era5-model',

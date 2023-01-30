@@ -8,7 +8,7 @@ import subprocess
 import datetime
 
 sys.path.append('/home/ukc/ecmwf-extractions/python_controller')
-sys.path.append('/home/ukc/ecmwf-extactions/job_templates/common')
+sys.path.append('/home/ukc/ecmwf-extractions/job_templates/common')
 
 
 from sl_tmp import *
@@ -25,7 +25,7 @@ PROCESSED_BASE_DIR_51 = '/scratch/ukc/era51_extract/%s/'
 
 
 TEMP_FILE_FOLDER = '/scratch/ukc/era5_temp_files/'
-TEMP_JOB_FOLDER = '/home/ukc/temp_jobfiles'
+TEMP_JOB_FOLDER = '/home/ukc/ecmwf-extractions/temp_jobfiles'
 
 EXPECTED_MIN_SIZE = {'era5-m-nc' : 1712107200,
                      'era5-s-nc': 26886360,
@@ -101,9 +101,10 @@ class ERA5_Process_Job:
         """
         group_size = len(self.files_to_split) / 25
         remainder = len(self.files_to_split) % 25
-        
         if group_size < 1:
             group_size = 25
+        group_size = int(group_size)
+        
         while self.files_to_split:
             self.sub_process_id = str(len(self.files_to_split))
 
@@ -119,7 +120,7 @@ class ERA5_Process_Job:
         self.time_stamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
         file_list_file_path = os.path.join(TEMP_FILE_FOLDER,self.stream + '-%s'% self.sub_process_id)
         
-        with file(file_list_file_path,'w') as write_file:
+        with open(file_list_file_path,'w') as write_file:
             for grib_path in grib_list:
                 write_file.write(grib_path+'\n')
         
@@ -135,10 +136,9 @@ class ERA5_Process_Job:
             self.job_script.extend(sl_commands_timecrit1)
 
         
-        
         self.job_script.append('#SBATCH --time=00:59:30')
-     
-        call_to_make =  'python /home/ukc/grib_splitter_call.py %s %s > dev null 2 /dev/null'% (file_list_file_path,stream)
+        self.job_script.append('module load ecmwf-toolbox')
+        call_to_make =  'python3.6 /home/ukc/ecmwf-extractions/grib_splitter_call.py %s %s > dev null 2 /dev/null'% (file_list_file_path,stream)
         self.job_script.append(call_to_make)
         
         self._writeJobFile()

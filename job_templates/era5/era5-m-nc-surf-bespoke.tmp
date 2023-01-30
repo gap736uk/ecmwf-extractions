@@ -10,5 +10,5 @@ retrieve,
  time=00/20,
  type=an,
  grid=0.25/0.25,
- target="/scratch/ms/gb/ukc/era5_extract/era5-m-nc/ecmwf-era5_{stream}_{type}_{levtype}_[DATE][time].{shortName}.grb".
+ target="/scratch/ukc/era5_extract/era5-m-nc/ecmwf-era5_{stream}_{type}_{levtype}_[DATE][time].{shortName}.grb".
 eor

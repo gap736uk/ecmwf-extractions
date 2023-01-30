@@ -10,5 +10,5 @@ retrieve,
  type=an,
  grid=0.25/0.25,
  format=netcdf,
- target="/scratch/ms/gb/ukc/era5t_extract_pre_split/era5t-s-nc/ecmwf-era5t_{stream}_{type}_{levtype}_[DATE][time].grb".
+ target="/scratch/ukc/era5t_extract_pre_split/era5t-s-nc/ecmwf-era5t_{stream}_{type}_{levtype}_[DATE][time].grb".
 eor

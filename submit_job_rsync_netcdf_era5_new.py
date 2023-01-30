@@ -53,17 +53,19 @@ import sys
 import string
 import re
 import time
-from datetime import date
+import datetime
 from dateutil.relativedelta import relativedelta
 
 
-sys.path.append('/home/ms/gb/ukc/python_controller')
-import times 
+sys.path.append('/home/ukc/ecmwf-extractions/python_controller')
+sys.path.append('/home/ukc/ecmwf-extractions/job_templates/common/')
+
+#import times 
 
 # Define directory names
-basedir="/home/ms/gb/ukc"
-templatedir=os.path.join(basedir, "job_templates")
-jobdir=os.path.join(basedir, "temp_jobfiles")
+basedir="/home/ukc/ecmwf-extractions"
+templatedir = os.path.join(basedir, "job_templates")
+jobdir = os.path.join(basedir, "temp_jobfiles")
 
 sys.path.append(os.path.join(templatedir, 'common'))
 
@@ -101,6 +103,27 @@ stream_div = {'era5-m-nc': 3,
               'era5t-s-en-mean-nc': 3}
 
 
+def times(start_date, end_date):
+
+    date_string = '20230101/20230102'
+    return date_string
+
+
+def times_createList(start_date, end_date, other_stuff, listtype, formatstring):
+    # starttuple = (int(self.start[:4]), int(self.start[4:6]), int(self.start[6:8]))
+    # endtuple = (int(self.end[:4]), int(self.end[4:6]), int(self.end[6:8])) 
+
+
+
+    #(starttuple, endtuple, (1, "day"), listtype="string", ="%Y%m%d")
+    
+    date1 = datetime.datetime(*start_date)
+    date2 = datetime.datetime(*end_date)
+    date_time_list = [date1 + datetime.timedelta(days=x) for x in range((date2-date1).days + 1)]
+    
+    date_tuples = [f"{x.year}{x.month:02d}{x.day:02d}" for x in date_time_list]
+    
+    return date_tuples
 def exitNicely(error=""):
     """
     Nice error message that also prints usage string.
@@ -117,7 +140,7 @@ class MarsJob:
 
   def __init__(self, dataset, kw):
     self.dataset = dataset
-    self.dparts = string.split(dataset, "-")
+    self.dparts = dataset.split("-")
     self.superset = self.dparts[0]
     
     if dataset[-4:] != ".tmp":
@@ -142,7 +165,7 @@ class MarsJob:
         setattr(self, key, kw[key])
 
     # If 'ago' keyword used then calculate the 'start' date
-
+      
     if hasattr(self, 'ago'):
         self.end=self.getDaysAgo(self.ago)
         if 'era5t' in self.dataset:
@@ -155,7 +178,7 @@ class MarsJob:
     if hasattr(self, 'end'):
         starttuple = (int(self.start[:4]), int(self.start[4:6]), int(self.start[6:8]))
         endtuple = (int(self.end[:4]), int(self.end[4:6]), int(self.end[6:8])) 
-        self.datelist = times.createList(starttuple, endtuple, (1, "day"), listtype="string", formatstring="%Y%m%d")
+        self.datelist = times_createList(starttuple, endtuple, (1, "day"), listtype="string", formatstring="%Y%m%d")
    
     # Run each method
     self.compileParts()
@@ -183,7 +206,7 @@ class MarsJob:
     elif self.qos == 'timecrit1':
         linelist += sl_commands_timecrit1 + ["\n"]
     
-    linelist +=  strict_command + ["\n"] + mkdir_commands + ["\n"] + job_info+["\n"]
+    #linelist +=  strict_command + ["\n"] + mkdir_commands + ["\n"] + job_info+["\n"]
     
     linelist +=  strict_command + ["\n"] + loop_commands+["\n"] + mkdir_commands + ["\n"] + job_info+["\n"]
     
@@ -192,10 +215,10 @@ class MarsJob:
     for line in linelist:
     
     
-        if string.find(line, 'JOB_NAME_HERE') > -1:
-            line = string.replace(line, 'JOB_NAME_HERE', self.dataset)
+        if 'JOB_NAME_HERE' in line:
+            line = line.replace(line, 'JOB_NAME_HERE', self.dataset)
     
-        elif string.find(line, '# NO_LOOPS_IS_DEFAULT') > -1:
+        elif '# NO_LOOPS_IS_DEFAULT' in line:
             
             if hasattr(self, 'datelist'):   
                 dates = ""
@@ -237,43 +260,43 @@ class MarsJob:
 
                 loop_comm = loop_comm+"\ndo\n"
 
-                line = string.replace(line, '# NO_LOOPS_IS_DEFAULT', loop_comm)    
+                line = line.replace('# NO_LOOPS_IS_DEFAULT', loop_comm)    
 
             else:
 
-                line = string.replace(line, '# NO_LOOPS_IS_DEFAULT', "")         
+                line = line.replace('# NO_LOOPS_IS_DEFAULT', "")         
 
-        elif string.find(line, 'PUT_DATE_HERE')>-1:
+        elif 'PUT_DATE_HERE' in line:
         
           if hasattr(self, 'datelist'):
-              line=string.replace(line, 'PUT_DATE_HERE', "$DATE")
+              line = line.replace('PUT_DATE_HERE', "$DATE")
           else:
-                line=string.replace(line, 'PUT_DATE_HERE', self.start)
-        elif string.find(line, 'TARGET_DIR')>-1:
-            line=string.replace(line, 'TARGET_DIR', self.target_dir)
-        elif string.find(line, '# NO_ENDLOOPS_IS_DEFAULT')>-1:
+                line = line.replace('PUT_DATE_HERE', self.start)
+        elif 'TARGET_DIR' in line:
+            line = line.replace('TARGET_DIR', self.target_dir)
+        elif '# NO_ENDLOOPS_IS_DEFAULT'  in line:
             if hasattr(self, 'datelist'):
-                line=string.replace(line, '# NO_ENDLOOPS_IS_DEFAULT', "done")
+                line = line.replace('# NO_ENDLOOPS_IS_DEFAULT', "done")
             else:
-                line=string.replace(line, '# NO_ENDLOOPS_IS_DEFAULT', "")    
-        elif hasattr(self, 'params') and string.find(line, 'param=')>-1:
-            params=string.split(self.params, ",")
-            params_out=string.join(params, "/")
-            line=" param=%s," % params_out
+                line = line.replace('# NO_ENDLOOPS_IS_DEFAULT', "")    
+        elif hasattr(self, 'params') and 'param=' in line:
+            params = self.params.split(",")
+            params_out = "/".join(params)
+            line = " param=%s," % params_out
         elif hasattr(self, 'step') and string.find(line, 'step=')>-1:
-            steps=string.split(self.step, ",")
-            steps_out=string.join(steps, "/")
-            line=" step=%s," % steps_out
+            steps = string.split(self.step, ",")
+            steps_out = string.join(steps, "/")
+            line = " step=%s," % steps_out
         elif hasattr(self, 'times') and string.find(line, 'time=')>-1:
-            times=string.split(self.times, ",")
-            times_out=string.join(times, "/")
+            times = string.split(self.times, ",")
+            times_out = string.join(times, "/")
             line=" time=%s," % times_out
         elif hasattr(self, 'levels') and string.find(line, 'level=')>-1:
-            levels=string.split(self.levels, ",")
-            levels_out=string.join(levels, "/")
-            line=" level=%s," % levels_out
+            levels = string.split(self.levels, ",")
+            levels_out = string.join(levels, "/")
+            line = " level=%s," % levels_out
         elif hasattr(self, 'file_template') and string.find(line, ' target="$WORK/')>-1:
-            line=' target="$WORK/'+self.file_template+'"'
+            line = ' target="$WORK/'+self.file_template+'"'
 
         self.job_script.append(line.rstrip())
     return "Job compiled correctly"
@@ -310,8 +333,10 @@ if __name__=="__main__":
     print("\nExecuting '%s' with arguments: " % args[0], args[1:],"\n")
     if len(args) < 2:
        exitNicely("Not enough arguments given.")
-    keywords = {}
+
     dataset=args[-1]
+    keywords = {}
+
 
     #print args
     for arg in args[1:-1]:
@@ -344,7 +369,7 @@ if __name__=="__main__":
 
         elif arg in ["-m"]:
             
-            earlier_month = date.today() + relativedelta(months=-3)
+            earlier_month = datetime.date.today() + relativedelta(months=-3)
             start = earlier_month + relativedelta(day=1)
             end   = earlier_month + relativedelta(day=31)
             keywords['start'] = start.strftime("%Y%m%d")
@@ -353,7 +378,7 @@ if __name__=="__main__":
         elif arg in ["--qos"]:
                 keywords['qos'] = args[args.index(arg) + 1]
         
-    if not keywords.has_key('start') and not keywords.has_key('ago'):
+    if not 'start' in keywords and not 'ago' in keywords:
     
        #exitNicely("No start date or 'ago' argument provided.")
         if 'era5t' in dataset:
@@ -361,7 +386,7 @@ if __name__=="__main__":
         else:
             keywords['ago'] = '10'
            
-    if not keywords.has_key('qos'):
+    if not 'qos' in keywords:
         keywords['qos'] = 'normal'
     
     x = MarsJob(dataset, keywords) 
